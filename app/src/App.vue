@@ -1,29 +1,92 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
   </div>
+  <!-- <nav-footer></nav-footer> -->
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+export default {
+  // components:{
+  //   navFooter
+  // }
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+</script>
+
+<style lang="scss">
+@mixin line-ellipsis(){
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.line-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.scroll-view_H {
+  white-space: nowrap;
+  width: 100%;
+}
+
+/* topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 88px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.city-entry {
+  padding-left: 30px;
+  font-size: 30px;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.city-name {
+  @include line-ellipsis;
+  max-width: 19.2vw;
+}
+
+.city-entry-arrow {
+  width: 0;
+  height: 0;
+  border: 8px solid #b0b0b0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  display: inline-block;
+  margin-left: 8px;
+  margin-top: 10px;
+}
+
+.phcolor {
+  color: #999;
+}
+
+.buy-tickets {
+  .btn {
+    width: 94px;
+    height: 56px;
+    line-height: 56px;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #f03d37;
+    color: #fff;
+    border-radius: 8px;
+    white-space: nowrap;
+    font-size: 24px;
+    border: none;
+  }
+  .btn.pre-sale {
+    background-color: #3c9fe6;
+  }
+  .want-see {
+    background-color: #faaf00;
   }
 }
 </style>

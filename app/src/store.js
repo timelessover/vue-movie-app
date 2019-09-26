@@ -5,12 +5,17 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  },
+		selectCity: null,  // 用户选择城市
+	},
+	getters:{
+		
+	},
+	mutations: {
+		selectCity(state,obj){
+			state.selectCity = obj
+		},
+	},
+	actions: {
+		
+	}
 });

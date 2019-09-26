@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "clean": "rm -rf node_modules",
+    "inspect": "vue-cli-service inspect"
   },
   "dependencies": {
     "core-js": "^2.6.5",
@@ -15,13 +16,14 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
-    "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
-    "@vue/eslint-config-airbnb": "^4.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
+    "axios": "^0.19.0",
+    "babel-plugin-component": "^1.1.1",
+    "fastclick": "^1.0.6",
+    "mint-ui": "^2.2.13",
     "node-sass": "^4.9.0",
+    "normalize.css": "^8.0.1",
+    "postcss-px-to-viewport": "^1.1.1",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"
   }
