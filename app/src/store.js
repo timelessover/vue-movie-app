@@ -4,8 +4,9 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-		selectCity: null,  // 用户选择城市
+  	state: {
+	   selectCity: null,  // 用户选择城市
+	   tabIndex: 0,
 	},
 	getters:{
 		

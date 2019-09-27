@@ -20,11 +20,19 @@
     <div class="switch-content">
       <!-- tab1列表 -->
       <div v-show="switchItem === 0">
-        <div v-for="(item,index) in movieList0" :key="index">
-          <movie-section :movie="item"></movie-section>
+        <div
+          v-for="(item,index) in movieList0"
+          :key="index"
+          infinite-scroll-disabled="loading"
+          v-infinite-scroll="loadMore"
+          infinite-scroll-distance="1000"
+        >
+          <div>
+            <movie-section :movie="item"></movie-section>
+          </div>
         </div>
         <div v-if="!loadComplete0 && movieList0.length">
-          <!-- <loadingMore></loadingMore> -->
+          <loadingMore></loadingMore>
         </div>
       </div>
       <!-- tab2列表 -->
@@ -54,20 +62,24 @@
 </template>
 
 <script>
-import { Loadmore, Indicator } from "mint-ui";
+import { Indicator } from "mint-ui";
 import { mapState, mapMutations } from "vuex";
 import { handleUrl } from "@/mixin/handleUrl";
-import  movieSection  from "components/movieSection";
+import movieSection from "components/movieSection";
+import loadingMore from "components/loadingMore";
 
 export default {
   name: "movie",
   components: {
-    Loadmore,
-    movieSection
+    movieSection,
+    loadingMore
   },
   mixins: [handleUrl],
   data() {
     return {
+      loading: false, //false：加载未完成,可以继续加载；true：加载完成，不能继续加载
+      bottomStatus: "",
+      wrapperHeight: "",
       city_name: "北京",
       tabList: [
         {
@@ -171,8 +183,15 @@ export default {
       );
       this.loadComplete2 = !res.data.paging.hasMore || !res.data.coming.length; //当返回的数组长度为0时也认为数据请求完毕
     },
+    loadMore() {
+      this.loading = true;
+      setTimeout(() => {
+        this.loadBottom();
+        this.loading = false;
+      }, 3000);
+    },
     //上拉触底刷新
-    onReachBottom() {
+    loadBottom() {
       const {
         switchItem,
         movieList0,
@@ -186,15 +205,6 @@ export default {
         this.ReachBottom(movieList0, movieIds0, loadComplete0, 0);
       } else {
         this.ReachBottom(movieList1, movieIds1, loadComplete1, 1);
-      }
-    },
-    // 下拉更新列表
-    onPullDownRefresh() {
-      const { switchItem } = this;
-      if (switchItem === 0) {
-        this.getFrirstList(1);
-      } else {
-        this.getComing(1);
       }
     }
   }
@@ -235,7 +245,7 @@ export default {
 }
 
 .switch-content {
-  padding-bottom: 30px;
+  padding-bottom: 16vw;
 }
 
 .title {

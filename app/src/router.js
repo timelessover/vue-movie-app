@@ -9,12 +9,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      redirect: { name: 'movie' }
+      redirect: '/movie'
     },
     {
       path: '/movie',
-      name: 'movie',
+      name: '电影',
+      meta: { navShow: true},
       component: () => import('./views/movie.vue')
     },
     {
@@ -23,8 +23,14 @@ export default new Router({
       component: () => import('./views/city-select.vue')
     },
     {
-      path:'/search-page/:stype',
-      name:'search-page',
+      path:'/cinemas',
+      name:'影院',
+      meta: { navShow: true}
+    },
+    {
+      path:'/user',
+      name:'我的',
+      meta: { navShow: true}
     },
     { path: '*',
       name: 404, 

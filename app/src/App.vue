@@ -1,23 +1,35 @@
 <template>
   <div id="app">
+    <mt-header v-show="$route.name !== 404" :title="$route.name">
+      <router-link v-show="!$route.meta.navShow" to="" slot="left">
+        <mt-button icon="back" @click.native="$router.back(-1)"></mt-button>
+      </router-link>
+    </mt-header>
     <router-view/>
+    <nav-footer v-show="$route.meta.navShow"></nav-footer>
   </div>
-  <!-- <nav-footer></nav-footer> -->
 </template>
 
 <script>
+import navFooter from "@/components/navFooter";
 export default {
-  // components:{
-  //   navFooter
-  // }
-}
+  components: {
+    navFooter
+  },
+  created () {
+    console.log(this.$router);
+  },
+};
 </script>
 
 <style lang="scss">
-@mixin line-ellipsis(){
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+::-webkit-scrollbar {
+  display: none;
+}
+@mixin line-ellipsis() {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .line-ellipsis {
   text-overflow: ellipsis;

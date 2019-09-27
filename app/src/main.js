@@ -4,7 +4,8 @@ import router from './router';
 import store from './store';
 import MintUI from 'mint-ui';
 import 'mint-ui/lib/style.css';
-import 'normalize.css'
+import './assets/my-mint.scss';
+import 'assets/reset.css';
 import request from './utils/request';
 // https://www.jianshu.com/p/bec7dbd5cdc6
 import FastClick from 'fastclick';
