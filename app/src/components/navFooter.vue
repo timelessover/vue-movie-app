@@ -33,7 +33,7 @@ export default {
           name: "电影"
         },
         {
-          url: "/cinemas",
+          url: "/cinema",
           img: require("../assets/images/cinema.png"),
           selectedImg: require("../assets/images/cinemaSelect.png"),
           name: "影院"

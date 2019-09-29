@@ -1,5 +1,5 @@
 <template>
-  <div class="movie">
+  <div class="movie" v-cloak>
     <div class="topbar">
       <router-link class="city-entry" to="./city-select">
         <span class="city-name">{{city}}</span>
@@ -19,27 +19,27 @@
     </div>
     <div class="switch-content">
       <!-- tab1列表 -->
-      <div v-show="switchItem === 0">
-        <div
-          v-for="(item,index) in movieList0"
-          :key="index"
-          infinite-scroll-disabled="loading"
-          v-infinite-scroll="loadMore"
-          infinite-scroll-distance="1000"
+      <div v-show="switchItem === 0" style="overhidden:scroll">
+        <List
+          :immediate-check="check"
+          v-model="loading"
+          :offset="offset"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
         >
-          <div>
-            <movie-section :movie="item"></movie-section>
+          <div ref="wrapper">
+            <div v-for="(item,index) in movieList0" :key="index">
+              <movie-section :movie="item"></movie-section>
+            </div>
           </div>
-        </div>
-        <div v-if="!loadComplete0 && movieList0.length">
-          <loadingMore></loadingMore>
-        </div>
+        </List>
       </div>
       <!-- tab2列表 -->
       <div v-show="switchItem===1">
         <div class="most-expected" v-if="mostExpectedList.length">
           <div class="title">近期最受期待</div>
-          <scroll-div class="scroll-div_H" scroll-x @scrolltolower="lower">
+          <div class="scroll-view_H" @scrolltolower="lower">
             <div v-for="(movie) in mostExpectedList" :key="movie.id">
               <router-link to="movie.url" class="expected-item">
                 <img :src="movie.img" class="poster">
@@ -48,23 +48,33 @@
                 <div class="data">{{movie.comingTitle}}</div>
               </router-link>
             </div>
-          </scroll-div>
+          </div>
         </div>
-        <div v-for="(movie) in movieList1" :key="movie.id">
-          <movie-section :movie="movie" rt="true"></movie-section>
-        </div>
-        <div v-if="!loadComplete1 && movieList1.length">
-          <!-- <loadingMore></loadingMore> -->
-        </div>
+        <List
+          :immediate-check="check"
+          v-model="loading1"
+          :offset="offset"
+          :finished="finished1"
+          finished-text="没有更多了"
+          @load="onLoad1"
+        >
+          <div>
+            <div v-for="(movie) in movieList1" :key="movie.id">
+              <movie-section :movie="movie" rt="true"></movie-section>
+            </div>
+          </div>
+        </List>
+        <div v-if="!loadComplete1 && movieList1.length"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Indicator } from "mint-ui";
+import { Toast, List } from "vant";
 import { mapState, mapMutations } from "vuex";
 import { handleUrl } from "@/mixin/handleUrl";
+import { throttle, debounce } from "../utils/util";
 import movieSection from "components/movieSection";
 import loadingMore from "components/loadingMore";
 
@@ -72,14 +82,18 @@ export default {
   name: "movie",
   components: {
     movieSection,
-    loadingMore
+    loadingMore,
+    List
   },
   mixins: [handleUrl],
   data() {
     return {
-      loading: false, //false：加载未完成,可以继续加载；true：加载完成，不能继续加载
-      bottomStatus: "",
-      wrapperHeight: "",
+      offset: 10,
+      loading: false,
+      loading1: false,
+      finished: false,
+      finished1: false,
+      check: false,
       city_name: "北京",
       tabList: [
         {
@@ -112,6 +126,7 @@ export default {
   created() {
     this.getFrirstList();
   },
+  mounted() {},
   methods: {
     selectItem(index) {
       this.switchItem = index;
@@ -122,7 +137,6 @@ export default {
     },
     async getComing(index = 0) {
       const res = await this.$http.get("/movie/mostExpected");
-      Indicator.close();
       let mostExpectedList = this.formatImgUrl(res.data.coming, true);
       mostExpectedList.forEach(item => {
         item.url = `movie-detail/movie-detail?movieId=${item.id}`;
@@ -130,22 +144,12 @@ export default {
       this.mostExpectedList = mostExpectedList;
     },
     async getMostExpected() {
-      Indicator.open({
-        text: "加载中...",
-        spinnerType: "fading-circle"
-      });
       const res = await this.$http.get("/movie/comingList");
-      Indicator.close();
       this.movieIds1 = res.data.movieIds;
       this.movieList1 = this.formatImgUrl(res.data.coming);
     },
     async getFrirstList(index = 0) {
-      Indicator.open({
-        text: "加载中...",
-        spinnerType: "fading-circle"
-      });
       const res = await this.$http.get("/movie/movieOnInfoList");
-      Indicator.close();
       this.movieList0 = this.formatImgUrl(res.data.movieList);
       this.movieIds0 = res.data.movieIds;
       if (res.data.movieList.length >= res.data.movieIds.length) {
@@ -183,12 +187,35 @@ export default {
       );
       this.loadComplete2 = !res.data.paging.hasMore || !res.data.coming.length; //当返回的数组长度为0时也认为数据请求完毕
     },
-    loadMore() {
+    onLoad() {
       this.loading = true;
-      setTimeout(() => {
-        this.loadBottom();
-        this.loading = false;
-      }, 3000);
+      if (this.loadComplete0) {
+        this.finished = true;
+      }
+      debounce(
+        setTimeout(() => {
+          console.log('2')
+          this.loadBottom();
+          this.loading = false;
+        }, 2000),
+        3000
+      );
+    },
+    onLoad1() {
+      let { loading1, finished1, loadComplete2 } = this;
+      loading1 = true;
+      if (loadComplete2) {
+        finished1 = true;
+      }
+      let timer;
+      if (!timer) {
+        timer = setTimeout(() => {
+          this.loadBottom();
+          loading1 = false;
+        }, 2000);
+      } else {
+        clearTimeout(timer);
+      }
     },
     //上拉触底刷新
     loadBottom() {
@@ -245,7 +272,7 @@ export default {
 }
 
 .switch-content {
-  padding-bottom: 16vw;
+  padding-bottom: 100px;
 }
 
 .title {

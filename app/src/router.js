@@ -23,9 +23,10 @@ export default new Router({
       component: () => import('./views/city-select.vue')
     },
     {
-      path:'/cinemas',
+      path:'/cinema',
       name:'影院',
-      meta: { navShow: true}
+      meta: { navShow: true},
+      component: () => import('./views/cinema.vue')
     },
     {
       path:'/user',

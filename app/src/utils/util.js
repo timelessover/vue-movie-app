@@ -74,3 +74,17 @@ export const throttle = (func, interval=250)=> {
     }
   }
 }
+
+export const debounce = (func, interval=250)=> {
+  let timeout;
+  const context = this
+  return function () {
+    if(timeout){
+      clearTimeout(timeout);
+    }else{
+      setTimeout(()=>{
+        func.call(context)
+      },interval)
+    }
+  }
+}

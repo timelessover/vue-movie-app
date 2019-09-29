@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   	state: {
 	   selectCity: null,  // 用户选择城市
-	   tabIndex: 0,
+	   LOADING: false
 	},
 	getters:{
 		
@@ -15,6 +15,12 @@ export default new Vuex.Store({
 		selectCity(state,obj){
 			state.selectCity = obj
 		},
+		showLoading(state){
+            state.LOADING = true    
+        },
+        hideLoading (state) {
+            state.LOADING = false
+        }
 	},
 	actions: {
 		

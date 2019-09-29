@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <mt-header v-show="$route.name !== 404" :title="$route.name">
-      <router-link v-show="!$route.meta.navShow" to="" slot="left">
-        <mt-button icon="back" @click.native="$router.back(-1)"></mt-button>
-      </router-link>
-    </mt-header>
+    <div v-show="$route.name !== 404">
+      <nav-bar
+        :title="$route.name"
+        :left-arrow="!$route.meta.navShow"
+        @click-left="$router.back(-1)"
+      ></nav-bar>
+    </div>
     <router-view/>
     <nav-footer v-show="$route.meta.navShow"></nav-footer>
   </div>
@@ -12,13 +14,13 @@
 
 <script>
 import navFooter from "@/components/navFooter";
+import { NavBar } from "vant";
+
 export default {
   components: {
-    navFooter
-  },
-  created () {
-    console.log(this.$router);
-  },
+    navFooter,
+    NavBar
+  }
 };
 </script>
 
@@ -40,6 +42,8 @@ export default {
 .scroll-view_H {
   white-space: nowrap;
   width: 100%;
+  display: flex;
+  overflow-y: auto;
 }
 
 /* topbar */
