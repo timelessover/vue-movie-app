@@ -5,6 +5,7 @@
         :title="$route.name"
         :left-arrow="!$route.meta.navShow"
         @click-left="$router.back(-1)"
+        fixed
       ></nav-bar>
     </div>
     <router-view/>
@@ -53,6 +54,12 @@ export default {
   align-items: center;
   height: 88px;
   border-bottom: 1px solid #e6e6e6;
+  top: 12vw;
+  left: 0;
+  width: 100%;
+  position: fixed;
+  background: #fff;
+  z-index: 999;
 }
 
 .city-entry {

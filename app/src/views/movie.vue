@@ -22,9 +22,9 @@
       <div v-show="switchItem === 0" style="overhidden:scroll">
         <List
           :immediate-check="check"
-          v-model="loading"
+          v-model="loading0"
           :offset="offset"
-          :finished="finished"
+          :finished="finished0"
           finished-text="没有更多了"
           @load="onLoad"
         >
@@ -74,7 +74,6 @@
 import { Toast, List } from "vant";
 import { mapState, mapMutations } from "vuex";
 import { handleUrl } from "@/mixin/handleUrl";
-import { throttle, debounce } from "../utils/util";
 import movieSection from "components/movieSection";
 import loadingMore from "components/loadingMore";
 
@@ -88,10 +87,10 @@ export default {
   mixins: [handleUrl],
   data() {
     return {
-      offset: 10,
-      loading: false,
+      offset: 300,
+      loading0: false,
       loading1: false,
-      finished: false,
+      finished0: false,
       finished1: false,
       check: false,
       city_name: "北京",
@@ -103,6 +102,7 @@ export default {
           title: "待映"
         }
       ],
+      timer: null,
       switchItem: 0,
       movieList0: [],
       movieIds0: [],
@@ -111,7 +111,7 @@ export default {
       movieList1: [],
       movieIds1: [],
       loadComplete1: false,
-      loadComplete2: false //水平滚动加载的数据是否加载完毕
+      loadComplete1: false //水平滚动加载的数据是否加载完毕
     };
   },
   computed: {
@@ -126,7 +126,6 @@ export default {
   created() {
     this.getFrirstList();
   },
-  mounted() {},
   methods: {
     selectItem(index) {
       this.switchItem = index;
@@ -174,9 +173,9 @@ export default {
     },
     //滚动到最右边时的事件处理函数
     async lower() {
-      const { mostExpectedList, loadComplete2 } = this;
+      const { mostExpectedList, loadComplete1 } = this;
       const length = mostExpectedList.length;
-      if (loadComplete2) {
+      if (loadComplete1) {
         return;
       }
       const res = await this.$http.get(
@@ -185,37 +184,28 @@ export default {
       this.tmostExpectedList = mostExpectedList.concat(
         this.formatImgUrl(res.data.coming, true)
       );
-      this.loadComplete2 = !res.data.paging.hasMore || !res.data.coming.length; //当返回的数组长度为0时也认为数据请求完毕
+      this.loadComplete1 = !res.data.paging.hasMore || !res.data.coming.length; //当返回的数组长度为0时也认为数据请求完毕
     },
-    onLoad() {
-      this.loading = true;
-      if (this.loadComplete0) {
-        this.finished = true;
-      }
-      debounce(
-        setTimeout(() => {
-          console.log('2')
-          this.loadBottom();
-          this.loading = false;
-        }, 2000),
-        3000
-      );
-    },
-    onLoad1() {
-      let { loading1, finished1, loadComplete2 } = this;
-      loading1 = true;
-      if (loadComplete2) {
-        finished1 = true;
-      }
-      let timer;
-      if (!timer) {
-        timer = setTimeout(() => {
-          this.loadBottom();
-          loading1 = false;
-        }, 2000);
+    infiniteScrollLoad(item){
+      if (this[`loadComplete${item}`]) {
+        this[`finished${item}`] = true;
+        this[`loading${item}`] = false
       } else {
-        clearTimeout(timer);
+        this[`loading${item}`] = true;
+        this.loadBottom();
+        // 要确定数据加载完毕在check长度，否则会多次触发
+        setTimeout(() => {
+          this[`loading${item}`] = false;
+        }, 500);
       }
+    },
+    // 列表1无限滚动
+    onLoad() {
+       this.infiniteScrollLoad(0)
+    },
+    // 列表2无限滚动
+    onLoad1() {
+      this.infiniteScrollLoad(1)
     },
     //上拉触底刷新
     loadBottom() {
@@ -272,6 +262,7 @@ export default {
 }
 
 .switch-content {
+  padding-top: 26vw;
   padding-bottom: 100px;
 }
 
