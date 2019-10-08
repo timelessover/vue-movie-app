@@ -119,7 +119,7 @@ export default {
       if (!this.$store.state.selectCity) {
         return "正在定位";
       } else {
-        return this.$store.state.selectCity.cityName || this.city_name;
+        return this.$store.state.selectCity || this.city_name;
       }
     }
   },

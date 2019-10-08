@@ -19,7 +19,7 @@ export default new Router({
     },
     {
       path: '/city-select',
-      name: 'city-select',
+      name: '城市选择',
       component: () => import('./views/city-select.vue')
     },
     {

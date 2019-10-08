@@ -1,7 +1,7 @@
 <template>
     <div class="nav-bar">
         <div class="nav">
-            <!-- 父组件想在子组件上监听自己的click,需要加上native修饰符 -->
+            <!-- 父组件想在子组件上监听自己的事件,需要加上native修饰符 -->
             <router-link
                 v-for="(item,index) in navlist"
                 :key="index"
@@ -61,6 +61,7 @@ export default {
   bottom: 0;
   z-index: 9999;
   padding: 0 4vw;
+  border-top: .5px solid #d8d8d8;
   .nav-item{
       width:100px;
       text-align: center;
