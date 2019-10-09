@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import './assets/css/my-vant.scss';
 import 'assets/css/reset.css';
+import 'assets/font/iconfont.css';
 import request from './utils/request';
 // https://www.jianshu.com/p/bec7dbd5cdc6
 import FastClick from 'fastclick';

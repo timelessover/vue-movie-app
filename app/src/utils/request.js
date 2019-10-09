@@ -12,9 +12,10 @@ const profix = (method, data, headers, url) => {
 		method: method,
 		baseURL: BASE_URL,
 		url,
-		data: data,
+		data,
 		timeout: 10000,
-		headers: headers
+		headers: headers,
+		params: data
 	}).then((res) => {
 		Toast.clear()
 		if (res.status !== (200 || 304)) {
@@ -35,11 +36,11 @@ export default {
 		}
 		return profix('post', data, headers, url)
 	},
-	get(url, data) {
+	get(url, params) {
 		let headers = {
 			'X-Requested-With': 'XMLHttpRequest',
 			'Content-Type': "application/json",
 		}
-		return profix('get', data, headers, url)
+		return profix('get', params, headers, url)
 	}
 }

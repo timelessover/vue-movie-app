@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <div v-show="$route.name !== 404">
+  <div id="app" v-cloak>
+    <div v-if="$route.name !== 404">
       <nav-bar
         :title="$route.name"
         :left-arrow="!$route.meta.navShow"

@@ -64,30 +64,27 @@
             </div>
           </div>
         </List>
-        <div v-if="!loadComplete1 && movieList1.length"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Toast, List } from "vant";
+import { List } from "vant";
 import { mapState, mapMutations } from "vuex";
 import { handleUrl } from "@/mixin/handleUrl";
 import movieSection from "components/movieSection";
-import loadingMore from "components/loadingMore";
 
 export default {
   name: "movie",
   components: {
     movieSection,
-    loadingMore,
     List
   },
   mixins: [handleUrl],
   data() {
     return {
-      offset: 300,
+      offset: 200,
       loading0: false,
       loading1: false,
       finished0: false,
@@ -125,6 +122,10 @@ export default {
   },
   created() {
     this.getFrirstList();
+  },
+  destroyed() {
+    // 避免无限滚动缓存页面高度，返回调用接口返回空白
+    document.documentElement.scrollTop = 0
   },
   methods: {
     selectItem(index) {
@@ -186,10 +187,10 @@ export default {
       );
       this.loadComplete1 = !res.data.paging.hasMore || !res.data.coming.length; //当返回的数组长度为0时也认为数据请求完毕
     },
-    infiniteScrollLoad(item){
+    infiniteScrollLoad(item) {
       if (this[`loadComplete${item}`]) {
         this[`finished${item}`] = true;
-        this[`loading${item}`] = false
+        this[`loading${item}`] = false;
       } else {
         this[`loading${item}`] = true;
         this.loadBottom();
@@ -201,11 +202,11 @@ export default {
     },
     // 列表1无限滚动
     onLoad() {
-       this.infiniteScrollLoad(0)
+      this.infiniteScrollLoad(0);
     },
     // 列表2无限滚动
     onLoad1() {
-      this.infiniteScrollLoad(1)
+      this.infiniteScrollLoad(1);
     },
     //上拉触底刷新
     loadBottom() {
@@ -278,36 +279,33 @@ export default {
   padding: 0 30px;
   padding-bottom: 20px;
   border-bottom: 20px solid #f5f5f5;
-}
+  .title {
+    padding-left: 0;
+    margin-bottom: 20px;
+  }
+  .expected-item {
+    display: inline-block;
+    width: 170px;
+    overflow: hidden;
+    margin-right: 20px;
+  }
+  .poster {
+    position: relative;
+    width: 170px;
+    height: 230px;
+    margin-bottom: 12px;
+  }
 
-.most-expected .title {
-  padding-left: 0;
-  margin-bottom: 20px;
-}
+  .name {
+    margin-bottom: 3px;
+    font-size: 24px;
+    color: #333;
+  }
 
-.expected-item {
-  display: inline-block;
-  width: 170px;
-  overflow: hidden;
-  margin-right: 20px;
-}
-
-.poster {
-  position: relative;
-  width: 170px;
-  height: 230px;
-  margin-bottom: 12px;
-}
-
-.name {
-  margin-bottom: 3px;
-  font-size: 24px;
-  color: #333;
-}
-
-.data {
-  font-size: 24px;
-  color: #999;
+  .data {
+    font-size: 24px;
+    color: #999;
+  }
 }
 </style>
 
