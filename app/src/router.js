@@ -31,7 +31,8 @@ export default new Router({
     {
       path:'/user',
       name:'我的',
-      meta: { navShow: true}
+      meta: { navShow: true},
+      component: () => import('./views/user.vue')
     },
     { path: '*',
       name: 404, 

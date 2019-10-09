@@ -282,7 +282,7 @@ export default {
 };
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
 .select-nav {
   font-size: 28px;
 }
@@ -291,7 +291,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100vw;
-  height: 80px;
+  height: 10vw;
   position: relative;
   color: #555;
   background: #fff;

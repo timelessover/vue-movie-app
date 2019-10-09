@@ -95,11 +95,9 @@ export default {
     }
   },
   created() {
-    this.initPage();
-  },
-  destroyed() {
     // 避免无限滚动缓存页面高度，返回调用接口返回空白
     document.documentElement.scrollTop = 0;
+    this.initPage();
   },
   methods: {
     //初始化页面
@@ -162,7 +160,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .topbar {
   position: fixed;
   width: 100vw;

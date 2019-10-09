@@ -121,11 +121,11 @@ export default {
     }
   },
   created() {
+    // 避免无限滚动缓存页面高度，返回调用接口返回空白
     this.getFrirstList();
   },
   destroyed() {
-    // 避免无限滚动缓存页面高度，返回调用接口返回空白
-    document.documentElement.scrollTop = 0
+    document.documentElement.scrollTop = 0;
   },
   methods: {
     selectItem(index) {
