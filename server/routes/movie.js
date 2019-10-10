@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-import { mostExpected, comingList, moreComingList,movieOnInfoList } from '../controller/movie'
+import { detailmovie, mostExpected, comingList, moreComingList, movieOnInfoList, comments } from '../controller/movie'
 
 
 router.prefix('/movie')
@@ -20,6 +20,14 @@ router.get('/moreComingList', async (ctx) => {
 // 上映的列表
 router.get('/movieOnInfoList', async (ctx) => {
   await movieOnInfoList(ctx)
+})
+// 电影详情评论
+router.get('/comments', async (ctx) => {
+  await comments(ctx)
+})
+// 电影详情
+router.get('/detailmovie', async (ctx) => {
+  await detailmovie(ctx)
 })
 
 module.exports = router

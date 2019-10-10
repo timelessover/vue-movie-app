@@ -17,8 +17,19 @@ export const mostExpected = async (ctx, next) => {
     const res = await request.get(`/ajax/mostExpected?limit=10&offset=${offset}&token=`)
     handleStatus(res,ctx)
 }
-// /ajax/movieOnInfoList?token=
+
 export const movieOnInfoList = async (ctx)=>{
     const res = await request.get('/ajax/movieOnInfoList?token=')
+    handleStatus(res,ctx)
+}
+
+export const detailmovie = async (ctx)=>{
+    const movieId = ctx.query.movieId
+    const res = await request.get(`/ajax/detailmovie?movieId=${movieId}`)
+    handleStatus(res,ctx)
+}
+export const comments = async (ctx)=>{
+    const movieId = ctx.query.movieId
+    const res = await request.get(`/mmdb/comments/movie/${movieId}.json?_v_=yes&offset=0`)
     handleStatus(res,ctx)
 }

@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     url() {
-      return "/movie-detail?movieId=" + this.movie.id;
+      return "movie/movie-detail?movieId=" + this.movie.id;
     }
   }
 };

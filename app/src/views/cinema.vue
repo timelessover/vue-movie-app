@@ -1,5 +1,6 @@
 <template>
   <div class="container" :style="{position: isShow ? 'fixed' : ''}">
+    <Sticky :offset-top="46">
     <div class="topbar">
       <router-link class="city-entry" to="/city-select">
         <span class="city-name">{{city}}</span>
@@ -16,6 +17,7 @@
         @toggleShow="toggleShow"
       />
     </div>
+    </Sticky>
     <List
       :immediate-check="check"
       :offset="offset"
@@ -38,7 +40,7 @@ import cinemaSection from "@/components/cinemaSection.vue";
 import empty from "@/components/empty.vue";
 import filterNav from "@/components/filter-nav.vue";
 import { getToday } from "@/utils/util.js";
-import { Toast, List } from "vant";
+import { Toast, List, Sticky  } from "vant";
 import { mapState, mapMutations } from "vuex";
 
 export default {
@@ -46,7 +48,8 @@ export default {
     cinemaSection,
     empty,
     filterNav,
-    List
+    List,
+    Sticky
   },
   data() {
     return {
@@ -162,12 +165,10 @@ export default {
 
 <style lang="scss" scoped>
 .topbar {
-  position: fixed;
   width: 100vw;
-  height: 90px;
+  height: 12vw;
   border: none;
   background-color: #f5f5f5;
-  top: 11vw;
 }
 
 .search-input {
@@ -191,19 +192,12 @@ export default {
 }
 
 .nav-wrapper {
-  position: fixed;
   z-index: 10;
-  top: 170px;
-  left: 0;
   width: 100vw;
   height: 80px;
   background: #fff;
 }
 
-.cinema-list {
-  // padding-bottom: 16vw;
-  margin-top: 270px;
-}
 
 ::-webkit-scrollbar {
   width: 0;

@@ -1,96 +1,41 @@
 <template>
-  <div class="movie" v-cloak>
-    <div class="topbar">
-      <router-link class="city-entry" to="./city-select">
-        <span class="city-name">{{city}}</span>
-        <span class="city-entry-arrow"></span>
-      </router-link>
-      <div class="switch-hot">
-        <div
-          v-for="(item,index) in tabList"
-          :key="index"
-          :class="['hot-item',{ 'active':index == switchItem}]"
-          @click="selectItem(index)"
-        >{{item.title}}</div>
-      </div>
-      <router-link class="search-entry" to="./search-page?stype=-1">
-        <span class="iconfont icon-sousuo"></span>
-      </router-link>
-    </div>
-    <div class="switch-content">
-      <!-- tab1列表 -->
-      <div v-show="switchItem === 0" style="overhidden:scroll">
-        <List
-          :immediate-check="check"
-          v-model="loading0"
-          :offset="offset"
-          :finished="finished0"
-          finished-text="没有更多了"
-          @load="onLoad"
-        >
-          <div ref="wrapper">
-            <div v-for="(item,index) in movieList0" :key="index">
-              <movie-section :movie="item"></movie-section>
-            </div>
-          </div>
-        </List>
-      </div>
-      <!-- tab2列表 -->
-      <div v-show="switchItem===1">
-        <div class="most-expected" v-if="mostExpectedList.length">
-          <div class="title">近期最受期待</div>
-          <div class="scroll-view_H" @scrolltolower="lower">
-            <div v-for="(movie) in mostExpectedList" :key="movie.id">
-              <router-link to="movie.url" class="expected-item">
-                <img :src="movie.img" class="poster">
-                <div class="name line-ellipsis">{{movie.nm}}</div>
-                <div class="data line-ellipsis">{{movie.wish}}人想看</div>
-                <div class="data">{{movie.comingTitle}}</div>
-              </router-link>
-            </div>
-          </div>
+  <div class="movie">
+    <Sticky :offset-top="46">
+      <div class="topbar">
+        <router-link class="city-entry" to="./city-select">
+          <span class="city-name">{{city}}</span>
+          <span class="city-entry-arrow"></span>
+        </router-link>
+        <div class="switch-hot">
+          <div
+            v-for="(item,index) in tabList"
+            :key="index"
+            :class="['hot-item',{ 'active':index == switchItem}]"
+            @click="selectItem(index)"
+          >{{item.title}}</div>
         </div>
-        <List
-          :immediate-check="check"
-          v-model="loading1"
-          :offset="offset"
-          :finished="finished1"
-          finished-text="没有更多了"
-          @load="onLoad1"
-        >
-          <div>
-            <div v-for="(movie) in movieList1" :key="movie.id">
-              <movie-section :movie="movie" rt="true"></movie-section>
-            </div>
-          </div>
-        </List>
+        <router-link class="search-entry" to="./search-page?stype=-1">
+          <span class="iconfont icon-sousuo"></span>
+        </router-link>
       </div>
+    </Sticky>
+    <div class="switch-content">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
-import { List } from "vant";
+import { Sticky } from "vant";
 import { mapState, mapMutations } from "vuex";
-import { handleUrl } from "@/mixin/handleUrl";
-import movieSection from "components/movieSection";
 
 export default {
   name: "movie",
   components: {
-    movieSection,
-    List
+    Sticky
   },
-  mixins: [handleUrl],
   data() {
     return {
-      offset: 200,
-      loading0: false,
-      loading1: false,
-      finished0: false,
-      finished1: false,
-      check: false,
-      city_name: "北京",
       tabList: [
         {
           title: "热映"
@@ -99,16 +44,7 @@ export default {
           title: "待映"
         }
       ],
-      timer: null,
       switchItem: 0,
-      movieList0: [],
-      movieIds0: [],
-      loadComplete0: false, //‘正在上映’数据是否加载到最后一条
-      mostExpectedList: [],
-      movieList1: [],
-      movieIds1: [],
-      loadComplete1: false,
-      loadComplete1: false //水平滚动加载的数据是否加载完毕
     };
   },
   computed: {
@@ -120,111 +56,16 @@ export default {
       }
     }
   },
-  created() {
-    // 避免无限滚动缓存页面高度，返回调用接口返回空白
-    this.getFrirstList();
-  },
-  destroyed() {
-    document.documentElement.scrollTop = 0;
-  },
   methods: {
     selectItem(index) {
-      this.switchItem = index;
-      if (index === 1 && !this.mostExpectedList.length) {
-        this.getMostExpected();
-        this.getComing();
-      }
-    },
-    async getComing(index = 0) {
-      const res = await this.$http.get("/movie/mostExpected");
-      let mostExpectedList = this.formatImgUrl(res.data.coming, true);
-      mostExpectedList.forEach(item => {
-        item.url = `movie-detail/movie-detail?movieId=${item.id}`;
-      });
-      this.mostExpectedList = mostExpectedList;
-    },
-    async getMostExpected() {
-      const res = await this.$http.get("/movie/comingList");
-      this.movieIds1 = res.data.movieIds;
-      this.movieList1 = this.formatImgUrl(res.data.coming);
-    },
-    async getFrirstList(index = 0) {
-      const res = await this.$http.get("/movie/movieOnInfoList");
-      this.movieList0 = this.formatImgUrl(res.data.movieList);
-      this.movieIds0 = res.data.movieIds;
-      if (res.data.movieList.length >= res.data.movieIds.length) {
-        this.loadComplete0 = true;
-      }
-    },
-    //上拉触底刷新的加载函数
-    async ReachBottom(list, ids, complete, item) {
-      if (complete) {
-        return;
-      }
-      const length = list.length;
-      if (length + 10 >= ids.length) {
-        this[`loadComplete${item}`] = true;
-      }
-      let query = ids.slice(length, length + 10).join("%2C");
-      const res = await this.$http.get(
-        `/movie/moreComingList?token=&movieIds=${query}`
-      );
-      const arr = this.formatImgUrl(res.data.coming);
-      this[`movieList${item}`] = [...list, ...arr];
-    },
-    //滚动到最右边时的事件处理函数
-    async lower() {
-      const { mostExpectedList, loadComplete1 } = this;
-      const length = mostExpectedList.length;
-      if (loadComplete1) {
-        return;
-      }
-      const res = await this.$http.get(
-        `/movie/mostExpected?limit=10&offset=${length}&token=`
-      );
-      this.tmostExpectedList = mostExpectedList.concat(
-        this.formatImgUrl(res.data.coming, true)
-      );
-      this.loadComplete1 = !res.data.paging.hasMore || !res.data.coming.length; //当返回的数组长度为0时也认为数据请求完毕
-    },
-    infiniteScrollLoad(item) {
-      if (this[`loadComplete${item}`]) {
-        this[`finished${item}`] = true;
-        this[`loading${item}`] = false;
-      } else {
-        this[`loading${item}`] = true;
-        this.loadBottom();
-        // 要确定数据加载完毕在check长度，否则会多次触发
-        setTimeout(() => {
-          this[`loading${item}`] = false;
-        }, 500);
-      }
-    },
-    // 列表1无限滚动
-    onLoad() {
-      this.infiniteScrollLoad(0);
-    },
-    // 列表2无限滚动
-    onLoad1() {
-      this.infiniteScrollLoad(1);
-    },
-    //上拉触底刷新
-    loadBottom() {
-      const {
-        switchItem,
-        movieList0,
-        movieIds0,
-        loadComplete0,
-        movieList1,
-        movieIds1,
-        loadComplete1
-      } = this;
+      if(this.switchItem === index) return 
+      this.switchItem = index
       if (this.switchItem === 0) {
-        this.ReachBottom(movieList0, movieIds0, loadComplete0, 0);
-      } else {
-        this.ReachBottom(movieList1, movieIds1, loadComplete1, 1);
+        this.$router.push('/movie/hot')
+      }else{
+        this.$router.push('/movie/expected')
       }
-    }
+    },
   }
 };
 </script>
@@ -263,7 +104,7 @@ export default {
 }
 
 .switch-content {
-  padding-top: 26vw;
+  padding-top: 16;
   padding-bottom: 100px;
 }
 

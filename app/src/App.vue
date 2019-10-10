@@ -1,12 +1,13 @@
 <template>
-  <div id="app" v-cloak>
+  <div id="app">
     <div v-if="$route.name !== 404">
-      <nav-bar
-        :title="$route.name"
-        :left-arrow="!$route.meta.navShow"
-        @click-left="$router.back(-1)"
-        fixed
-      ></nav-bar>
+      <Sticky>
+        <nav-bar
+          :title="$route.name"
+          :left-arrow="!$route.meta.navShow"
+          @click-left="$router.back(-1)"
+        />
+      </Sticky>
     </div>
     <router-view/>
     <nav-footer v-show="$route.meta.navShow"></nav-footer>
@@ -15,12 +16,13 @@
 
 <script>
 import navFooter from "@/components/navFooter";
-import { NavBar } from "vant";
+import { NavBar, Sticky } from "vant";
 
 export default {
   components: {
     navFooter,
-    NavBar
+    NavBar,
+    Sticky
   }
 };
 </script>
@@ -47,17 +49,13 @@ export default {
   overflow-y: auto;
 }
 
-/* topbar */
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 88px;
+  height: 12vw;
   border-bottom: 1px solid #e6e6e6;
-  top: 12vw;
-  left: 0;
   width: 100%;
-  position: fixed;
   background: #fff;
   z-index: 999;
 }
