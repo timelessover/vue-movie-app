@@ -28,7 +28,7 @@ export const handleImgandStars = {
 				stars[fullStars] = halfStar; //填充半星
 			}
 			let url = stars.map(item => {
-				return item = `/static/images/${item}.png`
+				return item =  require(`../assets/images/${item}.png`)
 			})
 			return url
 		}

@@ -1,45 +1,36 @@
 <template>
-    <div>
-        <div class="most-expected" v-if="mostExpectedList.length">
-            <div class="title">近期最受期待</div>
-            <div class="scroll-view_H">
-                <List
-                    :immediate-check="check"
-                    v-model="loading1"
-                    :offset="offset1"
-                    :finished="finished1"
-                    finished-text="没有更多了"
-                    @load="onLoad1"
-                >
-                    <div v-for="(movie) in mostExpectedList" :key="movie.id">
-                        <router-link to="movie.url" class="expected-item">
-                            <img :src="movie.img" class="poster">
-                            <div class="name line-ellipsis">{{movie.nm}}</div>
-                            <div class="data line-ellipsis">{{movie.wish}}人想看</div>
-                            <div class="data">{{movie.comingTitle}}</div>
-                        </router-link>
-                    </div>
-                </List>
-            </div>
+  <div>
+    <div class="most-expected" v-if="mostExpectedList.length">
+      <div class="title">近期最受期待</div>
+        <div class="scroll-view_H">
+          <div v-for="(movie) in mostExpectedList" :key="movie.id">
+            <router-link to="movie.url" class="expected-item">
+              <img :src="movie.img" class="poster">
+              <div class="name line-ellipsis">{{movie.nm}}</div>
+              <div class="data line-ellipsis">{{movie.wish}}人想看</div>
+              <div class="data">{{movie.comingTitle}}</div>
+            </router-link>
+          </div>
         </div>
-        <List
-            :immediate-check="check"
-            v-model="loading"
-            :offset="offset"
-            :finished="finished"
-            @load="lower"
-        >
-            <div>
-                <div v-for="(movie) in movieList" :key="movie.id">
-                    <movie-section :movie="movie" rt="true"></movie-section>
-                </div>
-            </div>
-        </List>
     </div>
+    <List
+      :immediate-check="check"
+      v-model="loading"
+      :offset="offset"
+      :finished="finished"
+      @load="onLoad"
+    >
+      <div>
+        <div v-for="(movie) in movieList" :key="movie.id">
+          <movie-section :movie="movie" rt="true"></movie-section>
+        </div>
+      </div>
+    </List>
+  </div>
 </template>
 
 <script>
-import { List, Sticky } from "vant";
+import { List } from "vant";
 import { handleUrl } from "@/mixin/handleUrl";
 import movieSection from "components/movieSection";
 
@@ -54,9 +45,7 @@ export default {
     return {
       offset: 200,
       loading: false,
-      loading1: false,
       finished: false,
-      finished1: false,
       check: false,
       movieList: [],
       movieIds: [],
@@ -69,13 +58,6 @@ export default {
     this.getComing();
   },
   methods: {
-    selectItem(index) {
-      if (index === 0) {
-        router.push("/movie/hot");
-      } else {
-        router.push("/movie/expected");
-      }
-    },
     async getComing(index = 0) {
       const res = await this.$http.get("/movie/mostExpected");
       let mostExpectedList = this.formatImgUrl(res.data.coming, true);
@@ -86,8 +68,8 @@ export default {
     },
     async getMostExpected() {
       const res = await this.$http.get("/movie/comingList");
-      this.movieIds1 = res.data.movieIds;
-      this.movieList1 = this.formatImgUrl(res.data.coming);
+      this.movieIds = res.data.movieIds;
+      this.movieList = this.formatImgUrl(res.data.coming);
     },
     //上拉触底刷新的加载函数
     async ReachBottom(list, ids, complete) {
@@ -104,34 +86,6 @@ export default {
       );
       const arr = this.formatImgUrl(res.data.coming);
       this.movieList = [...list, ...arr];
-    },
-    // 滚动到最右边时的事件处理函数
-    async lower() {
-      const { mostExpectedList, loadComplete } = this;
-      const length = mostExpectedList.length;
-      if (loadComplete) {
-        return;
-      }
-      const res = await this.$http.get(
-        `/movie/mostExpected?limit=10&offset=${length}&token=`
-      );
-      this.tmostExpectedList = mostExpectedList.concat(
-        this.formatImgUrl(res.data.coming, true)
-      );
-      this.loadComplete = !res.data.paging.hasMore || !res.data.coming.length; //当返回的数组长度为0时也认为数据请求完毕
-    },
-    infiniteScrollLoad(item) {
-      if (this[`loadComplete${item}`]) {
-        this[`finished${item}`] = true;
-        this[`loading${item}`] = false;
-      } else {
-        this[`loading${item}`] = true;
-        this.loadBottom();
-        // 要确定数据加载完毕在check长度，否则会多次触发
-        setTimeout(() => {
-          this[`loading${item}`] = false;
-        }, 500);
-      }
     },
     // 无限滚动
     onLoad() {
@@ -157,4 +111,44 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title {
+  padding: 0 30px;
+  padding-top: 20px;
+  font-size: 28px;
+  color: #333;
+}
+
+.most-expected {
+  position: relative;
+  padding: 0 30px;
+  padding-bottom: 20px;
+  border-bottom: 20px solid #f5f5f5;
+  .title {
+    padding-left: 0;
+    margin-bottom: 20px;
+  }
+  .expected-item {
+    display: inline-block;
+    width: 170px;
+    overflow: hidden;
+    margin-right: 20px;
+  }
+  .poster {
+    position: relative;
+    width: 170px;
+    height: 230px;
+    margin-bottom: 12px;
+  }
+
+  .name {
+    margin-bottom: 3px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .data {
+    font-size: 24px;
+    color: #999;
+  }
+}
 </style>

@@ -1,26 +1,26 @@
 <template >
-	<div class="commentSection">
-		<div>
-			<img :src="comment.avatarurl" class="avatar">
-		</div>
-		<div class="left">
-			<div class="nickName">
-				<span>{{comment.nick||comment.nickName}}</span>
-				<span v-if="comment.purchase" class="buy">购</span>
-			</div>
-			<div class="stars">
-				<img class="movie-star" v-for="(item,index) in comment.stars" :key="index" :src="item">
-			</div>
-			<div class="content">{{comment.content}}</div>
-			<div class="footer">
-				<div class="comment-time">{{comment.calcTime}}</div>
-				<div class="approve">
-					<span class="iconfont icon-zan1"></span>
-					<span>{{comment.approve ? comment.approve : '赞'}}</span>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="commentSection">
+    <div>
+      <img :src="comment.avatarurl" class="avatar">
+    </div>
+    <div class="left">
+      <div class="nickName">
+        <span>{{comment.nick||comment.nickName}}</span>
+        <span v-if="comment.purchase" class="buy">购</span>
+      </div>
+      <div class="stars">
+        <img class="movie-star" v-for="(item,index) in comment.stars" :key="index" :src="item">
+      </div>
+      <div class="content">{{comment.content}}</div>
+      <div class="footer">
+        <div class="comment-time">{{comment.calcTime}}</div>
+        <div class="approve">
+          <span class="iconfont icon-zan1"></span>
+          <span>{{comment.approve ? comment.approve : '赞'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -38,13 +38,17 @@ export default {
   display: flex;
   padding: 30px 0 0 30px;
   color: #555;
-  .movie-star {
-    width: 22px;
-    height: 22px;
-    margin-right: 3px;
-  }
-  &:last-child .left {
-    border: none;
+  .stars {
+    margin-top:10px;
+    line-height:12px;
+    .movie-star {
+      width: 22px;
+      height: 22px;
+      margin-right: 3px;
+    }
+    &:last-child .left {
+      border: none;
+    }
   }
 }
 
@@ -88,10 +92,10 @@ export default {
   font-size: 24px;
   color: #999;
 }
-.comment-time {
+.approve .icon-zan1  {
   font-size: 24px;
 }
-.approve {
-  font-size: 24px;
+.icon-zan1{
+  margin-right: 5px;
 }
 </style>

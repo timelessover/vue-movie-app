@@ -9,7 +9,7 @@
         />
       </Sticky>
     </div>
-    <router-view/>
+       <router-view/>
     <nav-footer v-show="$route.meta.navShow"></nav-footer>
   </div>
 </template>
@@ -43,8 +43,6 @@ export default {
 }
 
 .scroll-view_H {
-  white-space: nowrap;
-  width: 100%;
   display: flex;
   overflow-y: auto;
 }

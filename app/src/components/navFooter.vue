@@ -3,7 +3,7 @@
     <div class="nav">
       <!-- 父组件想在子组件上监听自己的事件,需要加上native修饰符 -->
       <router-link v-for="(item,index) in navlist" :key="index" :to="item.url" class="nav-item">
-        <img :src="$route.path === item.url ?item.selectedImg:item.img" alt="">
+        <img :src=tabImg(item) alt="">
         <div>{{item.name}}</div>
       </router-link>
     </div>
@@ -13,11 +13,6 @@
 <script>
 export default {
   name: "nav-footer",
-  props: {
-    list: {
-      type: Array
-    }
-  },
   data() {
     return {
       navlist: [
@@ -41,6 +36,15 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    tabImg(item) {
+      if (this.$route.matched[0]) {
+        return this.$route.matched[0].path === item.url || item.underUrl
+          ? item.selectedImg
+          : item.img;
+      }
+    }
   }
 };
 </script>

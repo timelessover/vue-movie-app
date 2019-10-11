@@ -2,7 +2,7 @@
   <div class="movie">
     <Sticky :offset-top="46">
       <div class="topbar">
-        <router-link class="city-entry" to="./city-select">
+        <router-link class="city-entry" to="/city-select">
           <span class="city-name">{{city}}</span>
           <span class="city-entry-arrow"></span>
         </router-link>
@@ -10,8 +10,8 @@
           <div
             v-for="(item,index) in tabList"
             :key="index"
-            :class="['hot-item',{ 'active':index == switchItem}]"
-            @click="selectItem(index)"
+            :class="['hot-item',{ 'active':item.title == $route.name}]"
+            @click="selectItem(item)"
           >{{item.title}}</div>
         </div>
         <router-link class="search-entry" to="./search-page?stype=-1">
@@ -38,13 +38,14 @@ export default {
     return {
       tabList: [
         {
-          title: "热映"
+          title: "热映",
+          url: '/movie/hot'
         },
         {
-          title: "待映"
+          title: "待映",
+          url: '/movie/expected'
         }
-      ],
-      switchItem: 0,
+      ]
     };
   },
   computed: {
@@ -57,14 +58,9 @@ export default {
     }
   },
   methods: {
-    selectItem(index) {
-      if(this.switchItem === index) return 
-      this.switchItem = index
-      if (this.switchItem === 0) {
-        this.$router.push('/movie/hot')
-      }else{
-        this.$router.push('/movie/expected')
-      }
+    selectItem(item) {
+      if(this.$route.path === item.url) return
+      this.$router.push(item.url)
     },
   }
 };

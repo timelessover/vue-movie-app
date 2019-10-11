@@ -14,18 +14,32 @@ export default new Router({
     {
       path: '/movie',
       redirect: '/movie/hot',
-      name: '电影',
-      meta: { navShow: true },
       component: () => import('./views/movie.vue'),
       children: [
         {
           path: 'hot',
-          name: '电影详情',
+          name: '热映',
+          meta: { navShow: true },
           component: () => import('./views/hot-movie.vue')
+        },
+        {
+          path: 'expected',
+          name: '待映',
+          meta: { navShow: true },
+          component: () => import('./views/expected-movie.vue')
         },
       ],
     },
-
+    {
+      path: '/movie/movie-detail',
+      name: '电影详情',
+      component: () => import('./views/movie-detail.vue')
+    },
+    {
+      path: '/movie/movie-detail/comment-detail',
+      name: '电影评论',
+      component: () => import('./views/comment-detail.vue')
+    },
     {
       path: '/city-select',
       name: '城市选择',

@@ -1,99 +1,108 @@
 <template>
-	<div class="select-nav">
-		<div class="tab">
-			<div :class="['nav-item', itemNum === 1?'select-item': '']" @click="selectItemNum(1)">
-				<span class="title line-ellipsis">{{itemName1}}</span>
-				<span class="city-entry-arrow"></span>
-			</div>
-			<div :class="['nav-item','have-border',itemNum===2?'select-item':'']" @click="selectItemNum(2)">
-				<span class="title line-ellipsis">{{itemName2}}</span>
-				<span class="city-entry-arrow"></span>
-			</div>
-			<div :class="['nav-item',itemNum === 3 ? 'select-item' : '']" @click="selectItemNum(3)">
-				<span class="title line-ellipsis">{{itemName3}}</span>
-				<span class="city-entry-arrow"></span>
-			</div>
-		</div>
-		<div class="nav-content">
-			<div class="nav-content-item region" v-show="itemNum===1">
-				<div class="tab">
-					<div :class="['nav-item',selectRegion.item===0 ?'active':'']" @click="selectRegionItem(0)">商区</div>
-					<div :class="['nav-item',selectRegion.item===1 ?'active':'']" @click="selectRegionItem(1)">地铁站</div>
-				</div>
-				<div class="region-list">
-					<div class="region-sidenav">
-						<div
-							v-for="item in selectRegion.sideList"
-							:key="item.id"
-							:class="['line-ellipsis','side-item',selectRegion.item === 0?(item.id===selectRegion.selectDistrictId?'active':''):(item.id===selectRegion.selectLineId?'active':'')]"
-							@click="regionSideClick(item)"
-						>{{item.name}}({{item.count}})</div>
-					</div>
-					<div class="region-list-item">
-						<div
-							v-for="item in selectRegion.list"
-							:key="item.id"
-							:class="['item',selectRegion.item===0?(item.id===selectRegion.selectAreaId?'red':''):(item.id===selectRegion.selectStationId?'red':'')]"
-							@click="regionListClick(item)"
-						>
-							<div>
-								<span
-									class="iconfont icon-hook"
-									:style="{'visibility':selectRegion.item===0?(item.id===selectRegion.selectAreaId?'':'hidden'):(item.id===selectRegion.selectStationId?'':'hidden')}"
-								></span>
-								{{item.name}}
-							</div>
-							<div>{{item.count}}</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 品牌列表 -->
-			<div class="nav-content-item brand" v-show="itemNum===2">
-				<div class="brand-scroll-view">
-					<div
-						v-for="item in cityCinemaInfo.brand.subItems"
-						:key="item.id"
-						:class="['brand-item',selectBrandId===item.id?'red':'']"
-						@click="selectBrand(item)"
-					>
-						<div>
-							<span class="iconfont icon-hook"></span>
-							{{item.name}}
-						</div>
-						<div class="brand-count">{{item.count}}</div>
-					</div>
-				</div>
-			</div>
-			<div class="nav-content-item special" v-show="itemNum === 3">
-				<div class="special-scroll-view">
-					<div class="item-title">特色功能</div>
-					<div class="item-list">
-						<div
-							v-for="item in cityCinemaInfo.service.subItems"
-							:key="item.id"
-							:class="['btn','line-ellipsis',selectServiceId===item.id?'select':'']"
-							@click="specialSelectItem(item.id,'service')"
-						>{{item.name}}</div>
-					</div>
-					<div class="item-title">特殊厅</div>
-					<div class="item-list">
-						<div
-							v-for="item in cityCinemaInfo.hallType.subItems"
-							:key="item.id"
-							:class="['btn','line-ellipsis',selectHallTypeId===item.id?'select':'']"
-							@click="specialSelectItem(item.id,'hallType')"
-						>{{item.name}}</div>
-					</div>
-				</div>
-				<div class="special-btn">
-					<div class="btn" @click="specialReset">重置</div>
-					<div class="btn confirm-btn" @click="specialConfirm">确定</div>
-				</div>
-			</div>
-			<div class="mask" @click.stop="cancal" v-show="itemNum !== -1"></div>
-		</div>
-	</div>
+  <div class="select-nav">
+    <div class="tab">
+      <div :class="['nav-item', itemNum === 1?'select-item': '']" @click="selectItemNum(1)">
+        <span class="title line-ellipsis">{{itemName1}}</span>
+        <span class="city-entry-arrow"></span>
+      </div>
+      <div
+        :class="['nav-item','have-border',itemNum===2?'select-item':'']"
+        @click="selectItemNum(2)"
+      >
+        <span class="title line-ellipsis">{{itemName2}}</span>
+        <span class="city-entry-arrow"></span>
+      </div>
+      <div :class="['nav-item',itemNum === 3 ? 'select-item' : '']" @click="selectItemNum(3)">
+        <span class="title line-ellipsis">{{itemName3}}</span>
+        <span class="city-entry-arrow"></span>
+      </div>
+    </div>
+    <div class="nav-content">
+      <div class="nav-content-item region" v-show="itemNum===1">
+        <div class="tab">
+          <div
+            :class="['nav-item',selectRegion.item===0 ?'active':'']"
+            @click="selectRegionItem(0)"
+          >商区</div>
+          <div
+            :class="['nav-item',selectRegion.item===1 ?'active':'']"
+            @click="selectRegionItem(1)"
+          >地铁站</div>
+        </div>
+        <div class="region-list">
+          <div class="region-sidenav">
+            <div
+              v-for="item in selectRegion.sideList"
+              :key="item.id"
+              :class="['line-ellipsis','side-item',selectRegion.item === 0?(item.id===selectRegion.selectDistrictId?'active':''):(item.id===selectRegion.selectLineId?'active':'')]"
+              @click="regionSideClick(item)"
+            >{{item.name}}({{item.count}})</div>
+          </div>
+          <div class="region-list-item">
+            <div
+              v-for="item in selectRegion.list"
+              :key="item.id"
+              :class="['item',selectRegion.item===0?(item.id===selectRegion.selectAreaId?'red':''):(item.id===selectRegion.selectStationId?'red':'')]"
+              @click="regionListClick(item)"
+            >
+              <div>
+                <span
+                  class="iconfont icon-hook"
+                  :style="{'visibility':selectRegion.item===0?(item.id===selectRegion.selectAreaId?'':'hidden'):(item.id===selectRegion.selectStationId?'':'hidden')}"
+                ></span>
+                {{item.name}}
+              </div>
+              <div>{{item.count}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 品牌列表 -->
+      <div class="nav-content-item brand" v-show="itemNum===2">
+        <div class="brand-scroll-view">
+          <div
+            v-for="item in cityCinemaInfo.brand.subItems"
+            :key="item.id"
+            :class="['brand-item',selectBrandId===item.id?'red':'']"
+            @click="selectBrand(item)"
+          >
+            <div>
+              <span class="iconfont icon-hook"></span>
+              {{item.name}}
+            </div>
+            <div class="brand-count">{{item.count}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-content-item special" v-show="itemNum === 3">
+        <div class="special-scroll-view">
+          <div class="item-title">特色功能</div>
+          <div class="item-list">
+            <div
+              v-for="item in cityCinemaInfo.service.subItems"
+              :key="item.id"
+              :class="['btn','line-ellipsis',selectServiceId===item.id?'select':'']"
+              @click="specialSelectItem(item.id,'service')"
+            >{{item.name}}</div>
+          </div>
+          <div class="item-title">特殊厅</div>
+          <div class="item-list">
+            <div
+              v-for="item in cityCinemaInfo.hallType.subItems"
+              :key="item.id"
+              :class="['btn','line-ellipsis',selectHallTypeId===item.id?'select':'']"
+              @click="specialSelectItem(item.id,'hallType')"
+            >{{item.name}}</div>
+          </div>
+        </div>
+        <div class="special-btn">
+          <div class="btn" @click="specialReset">重置</div>
+          <div class="btn confirm-btn" @click="specialConfirm">确定</div>
+        </div>
+      </div>
+      <div class="mask" @click.stop="cancal" v-show="itemNum !== -1"></div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -348,16 +357,16 @@ export default {
   }
 }
 
-.nav-content-item {
-  position: relative;
-  width: 100vw;
-  height: calc(100vh * 0.6);
-  background: #fff;
-  color: #777;
+.nav-content {
+  .nav-content-item {
+     z-index: 999;
+    position: relative;
+    width: 100vw;
+    height: calc(100vh * 0.6);
+    background: #fff;
+    color: #777;
+  }
 }
-
-/* region */
-
 .region {
   .tab {
     border: none;

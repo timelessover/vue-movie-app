@@ -84,7 +84,7 @@ export default {
     margin-right: 50px;
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: pre-wrap;
+    white-space: nowrap;
   }
 }
 

@@ -1,98 +1,90 @@
 <template>
-    <div v-if="detailMovie">
-        <div class="movie-header">
-            <div class="movie-background" :style="detailMovieImg"></div>
-            <div class="movie-mask"></div>
-            <div class="movie-content">
-                <div class="movie-poster" :style="detailMovieImg"></div>
-                <div class="movie-info">
-                    <div class="movie-name line-ellipsis">{{detailMovie.nm}}</div>
-                    <div class="movie-ename line-ellipsis">{{detailMovie.enm}}</div>
-                    <div v-if="detailMovie.globalReleased">
-                        <div v-if="detailMovie.sc">
-                            <div class="movie-score line-ellipsis">
-                                <img
-                                    class="movie-star"
-                                    v-for="(item,index) in detailMovie.stars"
-                                    :key="index"
-                                    :src="item"
-                                >
-                                {{detailMovie.sc}}
-                            </div>
-                            <div class="score-num line-ellipsis">({{detailMovie.snum}}万人评分)</div>
-                        </div>
-                        <div class="no-score" v-else>暂无评分</div>
-                    </div>
-                    <div v-else class="movie-score">{{detailMovie.wish}}人想看</div>
-                    <div class="movie-category line-ellipsis">
-                        <div>{{detailMovie.cat}}</div>
-                        <div class="tag-box" v-if="detailMovie.version">
-                            <span class="tag-d">{{detailMovie.version[0]}}</span>
-                            <span
-                                v-if="detailMovie.version[1]"
-                                class="tag-imax"
-                            >{{detailMovie.version[1]}}</span>
-                        </div>
-                    </div>
-                    <div
-                        class="movie-time line-ellipsis"
-                    >{{detailMovie.src}} / {{detailMovie.dur}}分钟</div>
-                    <div class="movie-time line-ellipsis">{{detailMovie.pubDesc}}</div>
-                </div>
+  <div v-if="detailMovie">
+    <div class="movie-header">
+      <div class="movie-background" :style="detailMovieImg"></div>
+      <div class="movie-mask"></div>
+      <div class="movie-content">
+        <div class="movie-poster" :style="detailMovieImg"></div>
+        <div class="movie-info">
+          <div class="movie-name line-ellipsis">{{detailMovie.nm}}</div>
+          <div class="movie-ename line-ellipsis">{{detailMovie.enm}}</div>
+          <div v-if="detailMovie.globalReleased">
+            <div v-if="detailMovie.sc">
+              <div class="movie-score line-ellipsis">
+                <img
+                  class="movie-star"
+                  v-for="(item,index) in detailMovie.stars"
+                  :key="index"
+                  :src="item"
+                >
+                {{detailMovie.sc}}
+              </div>
+              <div class="score-num line-ellipsis">({{detailMovie.snum}}万人评分)</div>
             </div>
+            <div class="no-score" v-else>暂无评分</div>
+          </div>
+          <div v-else class="movie-score">{{detailMovie.wish}}人想看</div>
+          <div class="movie-category line-ellipsis">
+            <div>{{detailMovie.cat}}</div>
+            <div class="tag-box" v-if="detailMovie.version">
+              <span class="tag-d">{{detailMovie.version[0]}}</span>
+              <span v-if="detailMovie.version[1]" class="tag-imax">{{detailMovie.version[1]}}</span>
+            </div>
+          </div>
+          <div class="movie-time line-ellipsis">{{detailMovie.src}} / {{detailMovie.dur}}分钟</div>
+          <div class="movie-time line-ellipsis">{{detailMovie.pubDesc}}</div>
         </div>
-        <div class="movie-body">
-            <div class="section">
-                <div class="section-title">剧情简介</div>
-                <div class="synopsis" :style="{height:toggleHeight}">{{detailMovie.dra}}</div>
-                <div :class="['iconfont','icon-xiala',{unfold:isFold} ]" @click="toggleFold"></div>
-            </div>
-            <div class="section">
-                <div class="section-title">演职人员</div>
-                <div class="scroll-view_H">暂无数据...</div>
-            </div>
-            <div class="section">
-                <div class="section-title">媒体库</div>
-                <div class="scroll-view_H">
-                    <div v-if="!detailMovie.videoImg && !detailMovie.photos.length">暂无数据...</div>
-                    <div class="videoImg-box" v-if="detailMovie.videoImg" @click="toVideo">
-                        <img :src="detailMovie.videoImg" class="videoImg">
-                        <div class="iconfont icon-zanting"></div>
-                    </div>
-                    <img
-                        v-for="(item,index) in detailMovie.photos"
-                        :key="item"
-                        :src="item"
-                        class="photo"
-                        mode="aspectFill"
-                        @click="predivImage(index)"
-                    >
-                </div>
-            </div>
-            <div class="section" v-if="comments.total && comments.hcmts.length">
-                <div class="section-title comment">观众评论</div>
-                <div v-for="(comment,index) in comments.hcmts" :key="index">
-                    <comment-section :comment="comment"></comment-section>
-                </div>
-                <rotuer-link
-                    v-if="comments.total"
-                    class="total"
-                    :to="watchAllUrl"
-                >查看全部{{comments.total}}条短评</rotuer-link>
-            </div>
-        </div>
-        <rotuer-link :to="purchaseUrl" v-if="detailMovie.onSale" class="purchase">优惠购票</rotuer-link>
+      </div>
     </div>
+    <div class="movie-body">
+      <div class="section">
+        <div class="section-title">剧情简介</div>
+        <div :class="['synopsis',{'hidden':isFold}]">{{detailMovie.dra}}</div>
+        <div :class="['iconfont','icon-xiala',{unfold:isFold} ]" @click="toggleFold"></div>
+      </div>
+      <div class="section">
+        <div class="section-title">演职人员</div>
+        <div class="scroll-view_H">暂无数据...</div>
+      </div>
+      <div class="section">
+        <div class="section-title">媒体库</div>
+        <div class="scroll-view_H">
+          <div v-if="!detailMovie.videoImg && !detailMovie.photos.length">暂无数据...</div>
+          <div class="videoImg-box" v-if="detailMovie.videoImg" @click="toVideo">
+            <img :src="detailMovie.videoImg" class="videoImg">
+            <div class="iconfont icon-zanting"></div>
+          </div>
+          <div class="photo">
+            <img
+              v-for="(item,index) in detailMovie.photos"
+              :key="item"
+              :src="item"
+              @click="preViewImage(index)"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="section" v-if="comments.total && comments.hcmts.length">
+        <div class="section-title comment">观众评论</div>
+        <div v-for="(comment,index) in comments.hcmts" :key="index">
+          <comment-section :comment="comment"></comment-section>
+        </div>
+        <router-link v-if="comments.total" class="total" :to="watchAllUrl">查看全部{{comments.total}}条短评</router-link>
+      </div>
+    </div>
+    <router-link :to="purchaseUrl" v-if="detailMovie.onSale" class="purchase">优惠购票</router-link>
+  </div>
 </template>
 
 <script>
 import { handleImgandStars } from "@/mixin/handleImgandStars.js";
 import commentSection from "@/components/commentSection.vue";
-import { ImagePreview } from "vant";
+import { ImagePreview, Lazyload } from "vant";
 export default {
   components: {
     commentSection,
-    ImagePreview
+    ImagePreview,
+    Lazyload
   },
   mixins: [handleImgandStars],
   data() {
@@ -103,8 +95,7 @@ export default {
     };
   },
   created() {
-    console.log(this.$route.params);
-    const movieId = this.$route.params.movieId;
+    const movieId = this.$route.query.movieId;
     this.initPage(movieId);
   },
   computed: {
@@ -113,19 +104,16 @@ export default {
         return `background-image: url(${this.detailMovie.img})`;
       }
     },
-    toggleHeight() {
-      return this.isFold ? "120px" : "auto";
-    },
     watchAllUrl() {
       if (this.detailMovie) {
-        return `/comment-page?movieId=${this.detailMovie.id}&movieName=${
+        return `/movie/movie-detail/comment-detail?movieId=${this.detailMovie.id}&movieName=${
           this.detailMovie.nm
         }`;
       }
     },
     purchaseUrl() {
       if (this.detailMovie) {
-        return `/select-cinema?movieId=${this.detailMovie.id}&movieName=${
+        return `/movie/movie-detail/select-cinema?movieId=${this.detailMovie.id}&movieName=${
           this.detailMovie.nm
         }&showTime=${this.detailMovie.rt}`;
       }
@@ -135,14 +123,12 @@ export default {
     //初始页面
     async initPage(movieId) {
       this.getComment(movieId);
-      const res = await this.$request(`/movie/detailmovie?movieId=${movieId}`);
+      const res = await this.$http.get(`/movie/detailmovie?movieId=${movieId}`);
       this.detailMovie = this.handleData(res.data.detailMovie);
     },
     //获取观众评论
     async getComment(movieId) {
-      const res = await this.$request(
-        `/mmdb/comments/movie/${movieId}.json?_v_=yes&offset=0`
-      );
+      const res = await this.$http.get(`/movie/comments?movieId=${movieId}`);
       let comments = { ...res.data };
       if (comments.total) {
         const arr = comments.hcmts.length ? comments.hcmts : comments.cmts;
@@ -151,13 +137,13 @@ export default {
       this.comments = comments;
     },
     //预览图片
-    previewImage(currentIndex) {
+    preViewImage(currentIndex) {
       const urls = this.detailMovie.photos.map(item =>
-        item.replace("180w_140h", "375w_250h")
+        item.replace("420w_279h", "375w_250h")
       );
       ImagePreview({
-        urls,
-        startPosition: urls[currentIndex]
+        images: urls,
+        startPosition: currentIndex
       });
     },
     //处理数据
@@ -178,7 +164,7 @@ export default {
       obj.stars = this.formatStar(obj.sc / 2);
       //处理媒体库的图片
       obj.photos = obj.photos.map(
-        item => item.replace("w.h/", "") + "@180w_140h_1e_1c.webp"
+        item => item.replace("w.h/", "").split("@")[0] + "@420w_279h_1e_1c"
       );
       return obj;
     },
@@ -343,9 +329,16 @@ export default {
   padding: 0 30px;
   line-height: 1.42;
   font-size: 30px;
+}
+.hidden {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  word-break: break-all;
   overflow: hidden;
 }
-
 .icon-jiantouarrow483 {
   height: 44px;
   width: 50px;
@@ -360,6 +353,7 @@ export default {
 }
 .icon-xiala {
   text-align: center;
+  font-size: 36px;
 }
 
 .scroll-view_H {
@@ -389,9 +383,15 @@ export default {
 }
 
 .photo {
-  width: 240px;
-  height: 180px;
-  margin-left: 10px;
+  display: flex;
+  img {
+    height: 180px;
+    width: 250px;
+    margin-left: 10px;
+    &:last-child {
+      padding-right: 10px;
+    }
+  }
 }
 
 .purchase {
@@ -419,5 +419,6 @@ export default {
   color: #f63;
   text-align: center;
   border-top: 1px solid #e6e6e6;
+  display: block;
 }
 </style>
