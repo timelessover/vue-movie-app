@@ -2,7 +2,6 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import './assets/css/my-vant.scss';
 import 'assets/css/reset.css';
 import 'assets/font/iconfont.css';
 import {storage} from 'utils/storage'

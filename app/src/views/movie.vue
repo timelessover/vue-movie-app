@@ -1,5 +1,6 @@
 <template>
   <div class="movie">
+    <Header :title="title"></Header>
     <Sticky :offset-top="46">
       <div class="topbar">
         <router-link class="city-entry" to="/city-select">
@@ -28,11 +29,12 @@
 <script>
 import { Sticky } from "vant";
 import { mapState, mapMutations } from "vuex";
-
+import Header from '@/components/header';
 export default {
   name: "movie",
   components: {
-    Sticky
+    Sticky,
+    Header
   },
   data() {
     return {
@@ -45,7 +47,8 @@ export default {
           title: "待映",
           url: '/movie/expected'
         }
-      ]
+      ],
+      title:'热映'
     };
   },
   computed: {
@@ -60,6 +63,7 @@ export default {
   methods: {
     selectItem(item) {
       if(this.$route.path === item.url) return
+      this.title = item.title
       this.$router.push(item.url)
     },
   }

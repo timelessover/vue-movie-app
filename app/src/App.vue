@@ -1,14 +1,5 @@
 <template>
   <div id="app">
-    <div v-if="$route.name !== 404">
-      <Sticky>
-        <nav-bar
-          :title="$route.name"
-          :left-arrow="!$route.meta.navShow"
-          @click-left="$router.back(-1)"
-        />
-      </Sticky>
-    </div>
        <router-view/>
     <nav-footer v-show="$route.meta.navShow"></nav-footer>
   </div>
@@ -16,18 +7,17 @@
 
 <script>
 import navFooter from "@/components/navFooter";
-import { NavBar, Sticky } from "vant";
+
 
 export default {
   components: {
     navFooter,
-    NavBar,
-    Sticky
   }
 };
 </script>
 
 <style lang="scss">
+
 ::-webkit-scrollbar {
   display: none;
 }
