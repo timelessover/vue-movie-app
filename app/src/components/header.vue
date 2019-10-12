@@ -1,8 +1,8 @@
 <template>
-    <div class="page-header">
-        <div v-if="$route.name !== 404">
+    <div class="page-header" v-cloak>
+        <div v-if="$route.name !== 404 ">
             <Sticky>
-                <nav-bar :title="title" :left-arrow="!$route.meta.navShow" @click-left="$router.back(-1)"/>
+                <nav-bar :title="title" :left-arrow="back" @click-left="$router.back(-1)"/>
             </Sticky>
         </div>
     </div>
@@ -20,6 +20,10 @@ export default {
       type: String,
       default: ""
     },
+    back:{
+      type: Boolean ,
+      default: true
+    }
   },
 };
 </script>

@@ -33,7 +33,7 @@
 import { List } from "vant";
 import { handleUrl } from "@/mixin/handleUrl";
 import movieSection from "components/movieSection";
-
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "expected-movie",
   components: {
@@ -54,6 +54,7 @@ export default {
     };
   },
   created() {
+    this.$store.commit('changeTitle',"待映")
     this.getMostExpected();
     this.getComing();
   },

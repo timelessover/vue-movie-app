@@ -43,20 +43,22 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      title: "我的",
       hasToken: false
     };
   },
-  onShow() {
+  created() {
+    this.$store.commit('changeTitle',"我的")
+    this.$store.commit('IsBackPage',false)
     if (!this.$storage.get("token")) {
-      router.go(-1);
+      // this.$router.go(-1);
     } else {
       this.hasToken = true;
     }
-  }
+  },
 };
 </script>
 

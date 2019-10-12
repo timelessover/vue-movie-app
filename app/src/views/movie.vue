@@ -1,6 +1,5 @@
 <template>
   <div class="movie">
-    <Header :title="title"></Header>
     <Sticky :offset-top="46">
       <div class="topbar">
         <router-link class="city-entry" to="/city-select">
@@ -29,12 +28,11 @@
 <script>
 import { Sticky } from "vant";
 import { mapState, mapMutations } from "vuex";
-import Header from '@/components/header';
+
 export default {
   name: "movie",
   components: {
-    Sticky,
-    Header
+    Sticky
   },
   data() {
     return {
@@ -50,6 +48,10 @@ export default {
       ],
       title:'热映'
     };
+  },
+  created() {
+    this.$store.commit('IsBackPage',false)
+    
   },
   computed: {
     city() {

@@ -80,6 +80,8 @@
 import { handleImgandStars } from "@/mixin/handleImgandStars.js";
 import commentSection from "@/components/commentSection.vue";
 import { ImagePreview, Lazyload } from "vant";
+import { mapState, mapMutations } from "vuex";
+
 export default {
   components: {
     commentSection,
@@ -95,6 +97,8 @@ export default {
     };
   },
   created() {
+    this.$store.commit('changeTitle',"电影详情")
+    this.$store.commit('IsBackPage',true)
     const movieId = this.$route.query.movieId;
     this.initPage(movieId);
   },
@@ -191,7 +195,7 @@ export default {
         sc: detailMovie.sc, //评分
         showst: detailMovie.showst //判读“想看”、“预售”
       });
-      router.push(`/video-page?paramsStr=${paramsStr}`);
+      this.$router.push(`/movie/movie-detail/video-page?paramsStr=${paramsStr}`);
     }
   }
 };

@@ -50,10 +50,12 @@ export default {
       sections: [], //所有section，保存每个section的节点在文档的位置信息
       topDistance: 45,
       barIndex: 0,
-      indexList: []
+      indexList: [],
     };
   },
   created() {
+    this.$store.commit('changeTitle',"选择城市")
+    this.$store.commit('IsBackPage',true)
     this.normalizeCityList(citys);
   },
   methods: {
@@ -168,10 +170,6 @@ export default {
 }
 
 /* 城市列表样式 */
-.citylist-content {
-  margin-top: 100px;
-}
-
 .section-title {
   padding-left: 30px;
   line-height: 60px;

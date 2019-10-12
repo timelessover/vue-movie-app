@@ -21,7 +21,7 @@
 import { List } from "vant";
 import { handleUrl } from "@/mixin/handleUrl";
 import movieSection from "components/movieSection";
-
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "hot-movie",
   components: {
@@ -43,6 +43,7 @@ export default {
     };
   },
   created() {
+    this.$store.commit('changeTitle',"热映")
     this.getFrirstList();
   },
   watch: {

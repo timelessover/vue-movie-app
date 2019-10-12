@@ -1,26 +1,36 @@
 <template>
-  <div id="app">
-       <router-view/>
+  <div id="app" v-cloak>
+    <Header :title="title" :back="back"></Header>
+      <router-view/>
     <nav-footer v-show="$route.meta.navShow"></nav-footer>
   </div>
 </template>
 
 <script>
 import navFooter from "@/components/navFooter";
-
-
+import Header from "@/components/header.vue";
+import { mapState, mapMutations } from "vuex";
 export default {
   components: {
     navFooter,
+    Header
+  },
+  computed: {
+    title() {
+      return this.$store.state.headerTitle;
+    },
+    back(){
+      return this.$store.state.backPage;
+    }
   }
 };
 </script>
 
 <style lang="scss">
-
 ::-webkit-scrollbar {
   display: none;
 }
+
 @mixin line-ellipsis() {
   text-overflow: ellipsis;
   overflow: hidden;

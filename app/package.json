@@ -25,6 +25,7 @@
     "node-sass": "^4.9.0",
     "postcss-px-to-viewport": "^1.1.1",
     "sass-loader": "^7.1.0",
+    "video.js": "^7.6.5",
     "vue-template-compiler": "^2.6.10"
   }
 }

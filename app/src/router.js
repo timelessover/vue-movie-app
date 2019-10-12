@@ -41,6 +41,11 @@ export default new Router({
       component: () => import('./views/comment-detail.vue')
     },
     {
+      path: '/movie/movie-detail/video-page',
+      name: '视频',
+      component: () => import('./views/video-page.vue')
+    },
+    {
       path: '/city-select',
       name: '城市选择',
       component: () => import('./views/city-select.vue')

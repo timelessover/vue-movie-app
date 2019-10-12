@@ -30,6 +30,8 @@
 import commentSection from "@/components/commentSection.vue";
 import { List } from "vant";
 import { handleImgandStars } from "@/mixin/handleImgandStars.js";
+import { mapState, mapMutations } from "vuex";
+
 export default {
   components: {
     commentSection,
@@ -49,6 +51,7 @@ export default {
     };
   },
   created() {
+
     const options = this.$route.query
     this.initPage(options);
   },
@@ -58,6 +61,8 @@ export default {
     initPage(options) {
       const movieId = options.movieId;
       const movieName = options.movieName;
+      this.$store.commit('changeTitle',`观众评论-${movieName}`)
+      this.$store.commit('IsBackPage',true)
       this.movieId = movieId;
       this.getComment(movieId);
     },

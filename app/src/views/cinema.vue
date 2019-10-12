@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :style="{position: isShow ? 'fixed' : ''}">
+  <div class="container">
     <Sticky :offset-top="46">
     <div class="topbar">
       <router-link class="city-entry" to="/city-select">
@@ -38,6 +38,7 @@
 <script>
 import cinemaSection from "@/components/cinemaSection.vue";
 import empty from "@/components/empty.vue";
+
 import filterNav from "@/components/filter-nav.vue";
 import { getToday } from "@/utils/util.js";
 import { Toast, List, Sticky  } from "vant";
@@ -98,12 +99,11 @@ export default {
     }
   },
   created() {
-    // 避免无限滚动缓存页面高度，返回调用接口返回空白
-    document.documentElement.scrollTop = 0;
+    this.$store.commit('changeTitle',"影院")
+    this.$store.commit('IsBackPage',false)
     this.initPage();
   },
   methods: {
-    //初始化页面
     async initPage() {
       const filter = await this.getFliterCinemas();
       this.cityCinemaInfo = filter.data;
