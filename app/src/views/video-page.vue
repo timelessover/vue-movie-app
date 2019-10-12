@@ -166,13 +166,9 @@ export default {
     //购票
     goTo() {
       const info = this.info;
-      const VideoContext = uni.createVideoContext("my-video", this);
-      VideoContext.pause();
-      uni.navigateTo({
-        url: `../select-cinema/select-cinema?movieId=${info.id}&movieName=${
+      this.$router.push(`/movie/movie-detail/select-cinema?movieId=${info.id}&movieName=${
           info.movieName
-        }&showTime=${info.rt}`
-      });
+        }&showTime=${info.rt}`)
     }
   }
 };

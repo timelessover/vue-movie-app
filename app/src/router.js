@@ -46,6 +46,11 @@ export default new Router({
       component: () => import('./views/video-page.vue')
     },
     {
+      path: '/movie/movie-detail/select-cinema',
+      name: '选择影院',
+      component: () => import('./views/select-cinema.vue')
+    },
+    {
       path: '/city-select',
       name: '城市选择',
       component: () => import('./views/city-select.vue')

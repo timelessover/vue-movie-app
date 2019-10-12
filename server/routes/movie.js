@@ -29,5 +29,10 @@ router.get('/comments', async (ctx) => {
 router.get('/detailmovie', async (ctx) => {
   await detailmovie(ctx)
 })
+// 电影详情
+router.get('/detailmovie', async (ctx) => {
+  await detailmovie(ctx)
+})
+
 
 module.exports = router

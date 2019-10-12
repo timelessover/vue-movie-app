@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 import {
-    filterCinemas, cinemaList
+    filterCinemas, cinemaList,forceUpdate
 } from "../controller/cinemas";
 
 
@@ -17,6 +17,9 @@ router.get('/cinemaList', async (ctx) => {
     await cinemaList(ctx)
 })
 
+router.post('/forceUpdate', async (ctx) => {
+    await forceUpdate(ctx)
+  })
 
 
 

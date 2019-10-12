@@ -1,19 +1,20 @@
 <template>
-	<div>
-		<div class="timeline scroll-view_H">
-			<div
-				v-for="(item,index) in days"
-				:class="['day', {'active':item.day==selectedDay}]"
-				:key="index"
-				@click="selectDay(item.day)"
-			>{{item.title}}</div>
-		</div>
-	</div>
+  <div class="select-time">
+    <tabs @click="selectDay" line-width="88" :ellipsis= 'ellipsis' >
+      <tab v-for="(item,index) in days" :key="index" :title='item.title' :cc="item.day"  >
+      </tab>
+    </tabs>
+  </div>
 </template>
 
 <script>
-import { getToday, formatTime } from "../utils/util.js";
+import { getToday, formatTime } from "utils/util.js";
+import { Tab,Tabs } from 'vant';
 export default {
+  components:{
+    Tab,
+    Tabs
+  },
   props: {
     /**
      * 模拟日期列表时开头的时间
@@ -33,17 +34,18 @@ export default {
   },
   data() {
     return {
-      selectedDay: ""
+      selectedDay: "",
+      ellipsis:false
     };
   },
   mounted() {
-    if (!this.days.length) {
-      this.getWeek(this.startTime);
-    }
+    this.getWeek(this.startTime);
   },
   // 父组件时间更新后才进行事件更新，第一次不用调用
   watch: {
-    days: "selectDay"
+    days:function(){
+      this.selectDay(0)
+    }
   },
   methods: {
     // 模拟7天时间列表
@@ -68,10 +70,11 @@ export default {
       }
       this.$emit("changeDays", days);
     },
-    selectDay(itemDay) {
+    selectDay(name,title) {
       // 第一种情况是默认第一个日期
       // 第二种是切换过程中没有该日期，默认为第一个开始日期
-      const day = itemDay || this.findDefaultDay() || this.days[0].day;
+      const item = this.days[name].day
+      const day = item || this.findDefaultDay() || this.days[0].day;
       if (day === this.selectedDay) {
         return;
       }
@@ -92,24 +95,5 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.timeline {
-  height: 90px;
-  border-bottom: 1px solid #e6e6e6;
-}
 
-.day {
-  display: inline-block;
-  height: 90px;
-  width: 30%;
-  line-height: 90px;
-  text-align: center;
-  box-sizing: border-box;
-  margin: 0 10px;
-  font-size: 28px;
-  color: #333;
-  >.active {
-    color: #ef4238;
-    border-bottom: 2px solid #ef4238;
-  }
-}
 </style>

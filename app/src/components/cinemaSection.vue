@@ -32,7 +32,7 @@
 export default {
   props: {
     cinema: Object,
-    movieId: Number,
+    movieId: String || Number,
     day: String || Number
   },
   computed: {
