@@ -1,19 +1,22 @@
 <template>
   <div class="select-time">
+    <Sticky :offset-top="46">
     <tabs @click="selectDay" line-width="88" :ellipsis= 'ellipsis' >
       <tab v-for="(item,index) in days" :key="index" :title='item.title' :cc="item.day"  >
       </tab>
     </tabs>
+    </Sticky> 
   </div>
 </template>
 
 <script>
 import { getToday, formatTime } from "utils/util.js";
-import { Tab,Tabs } from 'vant';
+import { Tab,Tabs,Sticky  } from 'vant';
 export default {
   components:{
     Tab,
-    Tabs
+    Tabs,
+    Sticky 
   },
   props: {
     /**

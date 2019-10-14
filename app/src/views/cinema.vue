@@ -38,7 +38,6 @@
 <script>
 import cinemaSection from "@/components/cinemaSection.vue";
 import empty from "@/components/empty.vue";
-
 import filterNav from "@/components/filter-nav.vue";
 import { getToday } from "@/utils/util.js";
 import { Toast, List, Sticky  } from "vant";

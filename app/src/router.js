@@ -62,6 +62,11 @@ export default new Router({
       component: () => import('./views/cinema.vue')
     },
     {
+      path: '/cinema/cinema-detail',
+      name: '影院详情',
+      component: () => import('./views/cinema-detail.vue')
+    },
+    {
       path: '/login',
       name: '登陆',
       component: () => import('./views/login.vue'),

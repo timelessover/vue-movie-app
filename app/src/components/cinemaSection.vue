@@ -32,12 +32,18 @@
 export default {
   props: {
     cinema: Object,
-    movieId: String || Number,
-    day: String || Number
+    movieId:{
+      type:String || Number,
+      default:''
+    },
+    day: {
+      type:String || Number,
+      default:''
+    },
   },
   computed: {
     url() {
-      return `/pages/cinema-detail/cinema-detail?cinemaId=${
+      return `/cinema/cinema-detail?cinemaId=${
         this.cinema.id
       }&movieId=${this.movieId}&day=${this.day}`;
     }

@@ -17,7 +17,7 @@ export default {
                 'Content-Type': "application/json",
             }
         }).catch((err) => {
-            console.log(err)
+            console.error(err)
         })
     },
     get(url,params) {
@@ -28,10 +28,10 @@ export default {
             params, 
             timeout: 10000,
             headers: {
-                'X-Requested-With': 'XMLHttpRequest'
+                'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'
             }
         }).catch((err)=>{
-            console.log(err)
+            console.error(err)
         })
     }
 }

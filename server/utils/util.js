@@ -7,6 +7,13 @@ export const handleStatus = (res,ctx) => {
             msg: '网络异常'
         }
     }
+    if (status == '403') {
+        ctx.body = {
+            err_code: 1,
+            status: 403,
+            msg: '没有权限访问'
+        }
+    }
     if (status == '500') {
         ctx.body = {
             err_code: 1,
