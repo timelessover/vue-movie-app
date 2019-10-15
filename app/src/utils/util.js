@@ -20,7 +20,7 @@ export const getToday = () => {
 }
 
 export const calcTime = (time) => {
-  if(!time){
+  if (!time) {
     return
   }
   const day = new Date(time)
@@ -36,22 +36,36 @@ export const calcTime = (time) => {
   if (60000 <= result && result < 3600000) {
     return `${Math.floor(result / 60000)}分钟前`
   }
-  if (3600000 <= result && result < 86400000){
+  if (3600000 <= result && result < 86400000) {
     return `${Math.floor(result / 3600000)}小时前`
   }
   if (86400000 <= result && result < 604800000) {
     return `${Math.floor(result / 86400000)}天前`
   }
   return `${formatNumber(day.getMonth() + 1)}-${formatNumber(day.getDate())}`
- 
+
 }
 
 //获取指定区间的随机整数
-export const getRandom = (lowerValue, upperValue,isFormat)=>{
+export const getRandom = (lowerValue, upperValue, isFormat) => {
   const num = Math.floor(Math.random() * (upperValue - lowerValue + 1) + lowerValue);
-  if (isFormat){
+  if (isFormat) {
     return formatNumber(num);
   } else {
     return num
+  }
+}
+export const throttle = (func, wait) => {
+
+  var context, args
+  var previous = 0
+  return function () {
+    var now = +new Date()
+    context = this
+    args = arguments;
+    if (now - previous >= wait) {
+      func.apply(context, args)
+      previous = now
+    }
   }
 }

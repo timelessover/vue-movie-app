@@ -1,6 +1,7 @@
 $white : #fff;
+$bg: #e54847;
 .van-nav-bar{
-    background-color:#e54847;
+    background-color:$bg;
     font-size:4vw;
     .van-nav-bar__title{
         font-size:4vw;
@@ -11,3 +12,9 @@ $white : #fff;
         color:$white;
     }
 }
+.van-search{
+    .van-search__action{
+        color:$bg !important;
+    }
+}
+

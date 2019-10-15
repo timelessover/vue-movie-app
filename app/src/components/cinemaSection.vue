@@ -11,18 +11,18 @@
 			<span class="distance">{{cinema.distance}}</span>
 		</div>
 		<div class="feature-tags">
-			<span v-if="cinema.endorse || cinema.tag.endorse">退</span>
-			<span v-if="cinema.allowRefund || cinema.tag.allowRefund">改签</span>
-			<span v-for="item in cinema.hallType || cinema.tag.hallType" :key="item">{{item}}</span>
-			<span class="featrue" v-if="cinema.snack || cinema.tag.snack">小吃</span>
+			<span v-if="cinema.endorse || cinema.tag&&cinema.tag.endorse">退</span>
+			<span v-if="cinema.allowRefund || cinema.tag&&cinema.tag.allowRefund">改签</span>
+			<span v-for="item in cinema.hallType || cinema.tag&&cinema.tag.hallType" :key="item">{{item}}</span>
+			<span class="featrue" v-if="cinema.snack || cinema.tag&&cinema.tag.snack">小吃</span>
 			<span
 				class="featrue"
-				v-if="cinema.vipDesc ||cinema.tag.vipTag"
-			>{{cinema.vipDesc ||cinema.tag.vipTag}}</span>
+				v-if="cinema.vipDesc || cinema.tag&&cinema.tag.vipTag"
+			>{{cinema.vipDesc || cinema.tag&&cinema.tag.vipTag}}</span>
 		</div>
-		<div v-if="!!cinema.promotion.cardPromotionTag">
+		<div v-if="!!cinema.promotion&&cinema.promotion.cardPromotionTag">
 			<span class="card"></span>
-			<span class="discount-label-text">{{cinema.promotion.cardPromotionTag}}</span>
+			<span class="discount-label-text">{{cinema.promotion&&cinema.promotion.cardPromotionTag}}</span>
 		</div>
 		<div v-if="cinema.showTimes" class="showTimes">近期场次：{{cinema.showTimes}}</div>
 	</router-link>
@@ -31,7 +31,10 @@
 <script>
 export default {
   props: {
-    cinema: Object,
+    cinema: {
+      type:Object,
+      default:{}
+    },
     movieId:{
       type:String || Number,
       default:''

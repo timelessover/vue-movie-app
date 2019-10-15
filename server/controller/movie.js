@@ -33,3 +33,8 @@ export const comments = async (ctx)=>{
     const res = await request.get(`/mmdb/comments/movie/${movieId}.json?_v_=yes&offset=0`)
     handleStatus(res,ctx)
 }
+export const search = async (ctx)=>{
+    const {kw,stype} = ctx.query
+    const res = await request.get(`/ajax/search?kw=${encodeURI(kw)}&cityId=1&stype=${stype}`)
+    handleStatus(res,ctx)
+}
