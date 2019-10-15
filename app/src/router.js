@@ -67,6 +67,11 @@ export default new Router({
       component: () => import('./views/cinema-detail.vue')
     },
     {
+      path: '/cinema/select-seat',
+      name: '选择座位',
+      component: () => import('./views/select-seat.vue')
+    },
+    {
       path: '/login',
       name: '登陆',
       component: () => import('./views/login.vue'),

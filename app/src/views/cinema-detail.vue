@@ -182,7 +182,7 @@ export default {
         cinemaData: cinemaDetail.cinemaData, //影院信息
         seqNo: info.seqNo
       });
-      this.$router.push(`/cinema/seat-choose?info=${paramsStr}`);
+      this.$router.push(`/cinema/select-seat?info=${paramsStr}`);
     },
     //处理散场时间
     createEndTime(arr, dur) {

@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 import {
-    filterCinemas, cinemaList,forceUpdate,cinemaDetail
+    filterCinemas, cinemaList,forceUpdate,cinemaDetail,seatingPlan
 } from "../controller/cinemas";
 
 
@@ -26,6 +26,12 @@ router.get('/cinemaList', async (ctx) => {
 router.post('/forceUpdate', async (ctx) => {
     await forceUpdate(ctx)
   })
+
+// 根据时间刷新在映的影院
+router.post('/seatingPlan', async (ctx) => {
+    await seatingPlan(ctx)
+  })
+
 
 
 

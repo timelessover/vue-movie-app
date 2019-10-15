@@ -74,9 +74,7 @@ export default {
         this.calcSize().then(size => {
           this.movie = movie;
           this.size = size;
-          console.log(index);
           this.scrollLeft = size * index;
-          console.log(this.scrollLeft);
         });
       }
       this.$emit("selectMovie", movie);

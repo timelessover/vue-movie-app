@@ -22,19 +22,19 @@
         <div class="name-box">
           <div class="name">{{info.movieName}}</div>
           <div class="tag-box" v-if="info.version">
-            <text class="tag-d">{{info.version[0]}}</text>
-            <text v-if="info.version[1]" class="tag-imax">{{info.version[1]}}</text>
+            <span class="tag-d">{{info.version[0]}}</span>
+            <span v-if="info.version[1]" class="tag-imax">{{info.version[1]}}</span>
           </div>
         </div>
         <div class="sc-box">
           <div v-if="info.globalReleased">
             <div v-if="info.sc">猫眼评分
-              <text class="yellow">{{info.sc}}</text>
+              <span class="yellow">{{info.sc}}</span>
             </div>
             <div v-else>暂无评分</div>
           </div>
           <div v-else>
-            <text class="yellow">{{info.wish}}</text>人想看
+            <span class="yellow">{{info.wish}}</span>人想看
           </div>
         </div>
         <div class="release">{{info.release}}</div>

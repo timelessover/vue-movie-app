@@ -65,7 +65,6 @@ export default {
 <style lang="scss" scoped>
 .container {
   width: 100vw;
-  height: 100vh;
   background: #f3f3f3;
   .header {
     display: flex;
@@ -79,7 +78,6 @@ export default {
     height: 300px;
     overflow: hidden;
     text-align: center;
-    margin-top: 9vh;
     .avatar {
       width: 120px;
       height: 120px;

@@ -2,7 +2,7 @@
   <div id="app" v-cloak>
     <Header :title="title" :back="back"></Header>
       <router-view/>
-    <nav-footer v-show="$route.meta.navShow"></nav-footer>
+    <nav-footer v-if="$route.meta.navShow"></nav-footer>
   </div>
 </template>
 

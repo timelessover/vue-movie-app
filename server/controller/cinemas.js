@@ -29,3 +29,11 @@ export const forceUpdate = async (ctx, next) => {
     const res = await request.post(`/ajax/movie?forceUpdate=${Date.now()}`, params)
     handleStatus(res, ctx)
 }
+
+// 选择座位信息
+export const seatingPlan = async (ctx, next) => {
+    const params = ctx.query
+    const res = await request.post(`/ajax/seatingPlan?timestamp=${new Date().getTime()}`, params)
+    handleStatus(res, ctx)
+}
+
