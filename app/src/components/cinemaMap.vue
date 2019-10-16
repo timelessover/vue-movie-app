@@ -1,79 +1,68 @@
 <template>
-  <view class='cinema-info'>
-    <view class='info-box'>
-      <view class='title line-ellipsis'>{{cinemaData.nm}}</view>
-      <view class='location'>{{cinemaData.addr}}</view>
-    </view>
-    <navigator :url='url' class='location-icon' hover-class='none'>
-      <image src='/static/images/location.png' mode='aspectFit'/>      <view>地图</view>
-    </navigator>
-  </view>
+	<div class="cinema-info">
+		<div class="info-box">
+			<div class="title line-ellipsis">{{cinemaData.nm}}</div>
+			<div class="location">{{cinemaData.addr}}</div>
+		</div>
+		<div class="location-icon">
+			<img src="../assets/images/location.png">
+			<div>地图</div>
+		</div>
+	</div>
 </template>
 
 <script>
-	export default{
-		name:'cinemaMap',
-		props:{
-			cinemaData:Object
-		},
-		data(){
-			return {
-				url:null
-			}
-		},
-		watch:{
-			cinemaData(){
-				this.url = `/pages/cinema-map/cinema-map?latitude=${this.cinemaData.lat}&longitude=${this.cinemaData.lng}&nm=${this.cinemaData.nm}&addr=${this.cinemaData.addr}`
-			}
-		}
-	}
+export default {
+  name: "cinemaMap",
+  props: {
+	  cinemaData: {
+		  type: Object,
+		  default: {}
+	  },
+  },
+};
 </script>
 
-<style>
-	.cinema-info {
-	  display: flex;
-	  justify-content: space-between;
-	  align-items: center;
-	  padding: 30rpx;
-	  padding-right: 0;
-	  background: #fff;
-	}
-	
-	.cinema-info .info-box {
-	  width: 520rpx;
-	}
-	
-	.cinema-info .title {
-	  font-size: 30rpx;
-	  line-height: 48rpx;
-	  color: #333;
-	}
-	
-	.cinema-info .location {
-	  margin-top: 2px;
-	  font-size: 28rpx;
-	  line-height: 37rpx;
-	  color: #999;
-	}
-	
-	.cinema-info .location-icon {
-	  display: flex;
-	  flex-direction: column;
-	  justify-content: center;
-	  align-items: center;
-	  width: 140rpx;
-	  height: 75rpx;
-	  border-left: 1px solid #d8d8d8;
-	  text-align: center;
-	}
-	
-	.cinema-info .location-icon image {
-	  width: 36rpx;
-	  height: 39rpx;
-	  margin-bottom: 10rpx;
-	}
-	.cinema-info .location-icon view{
-	  font-size: 24rpx;
-	  color: #999;
-	}
+<style lang="scss" scoped>
+.cinema-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  padding-right: 0;
+  background: #fff;
+  .info-box {
+    width: 520px;
+  }
+  .title {
+    font-size: 30px;
+    line-height: 48px;
+    color: #333;
+  }
+  .location {
+    margin-top: 2px;
+    font-size: 28px;
+    line-height: 37px;
+    color: #999;
+  }
+  .location-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 75px;
+    border-left: 1px solid #d8d8d8;
+    text-align: center;
+    div {
+      font-size: 24px;
+      color: #999;
+    }
+    img {
+      width: 36px;
+      height: 39px;
+      margin-bottom: 10px;
+    }
+  }
+}
 </style>

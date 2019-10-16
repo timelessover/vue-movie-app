@@ -6,7 +6,7 @@
         <span class="city-name">{{city}}</span>
         <span class="city-entry-arrow"></span>
       </router-link>
-      <router-link to="/search-page" class="search-input">
+      <router-link to="/movie/search-page?stype=2" class="search-input">
         <span class="iconfont icon-sousuo"></span>搜影院
       </router-link>
     </div>

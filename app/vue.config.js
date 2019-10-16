@@ -17,5 +17,6 @@ module.exports = {
             .set("assets", resolve("src/assets"))
             .set("components", resolve("src/components"))
             .set("utils", resolve("src/utils"))
+            .set("mixin", resolve("src/mixin"))
     }
 };

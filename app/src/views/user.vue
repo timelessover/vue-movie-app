@@ -12,11 +12,11 @@
                 <div class="title-line"></div>
             </div>
             <div class="order-list">
-                <router-link class="order-item" to="/pages/movie-order/movie-order">
+                <router-link class="order-item" to="/my/movie-order">
                     <img src="../assets/images/order_movie.png">
                     <div>电影</div>
                 </router-link>
-                <router-link class="order-item" to="/pages/snack-order/snack-order">
+                <router-link class="order-item" to="/my/snack-order">
                     <img src="../assets/images/order_store.png">
                     <div>小吃</div>
                 </router-link>

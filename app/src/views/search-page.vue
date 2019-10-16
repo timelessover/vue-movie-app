@@ -1,6 +1,6 @@
 <template>
 	<div class="search-wrapper">
-		<search v-model="value" placeholder="搜电影、搜影院" show-action @cancel="onCancel"/>
+		<search v-model="value" :placeholder="placeholder" show-action @cancel="onCancel"/>
 		<div class="result-list">
 			<div v-if="movies.length" class="movie-box">
 				<div class="title">电影/电视剧/综艺</div>
@@ -42,6 +42,9 @@ import empty from "@/components/empty.vue";
 import cinemaSection from "@/components/cinemaSection.vue";
 import { Search } from "vant";
 import {throttle} from 'utils/util'
+import { mapState, mapMutations } from "vuex";
+
+
 export default {
   name: "searchPage",
   components: {
@@ -60,6 +63,7 @@ export default {
     };
   },
   created() {
+    this.tabBarSetting('搜素')
     const query = this.$route.query;
     this.initPage(query);
   },
@@ -70,6 +74,10 @@ export default {
     },500)
   },
   methods: {
+    tabBarSetting(title, back=true) {
+      this.$store.commit("changeTitle", title);
+      this.$store.commit("IsBackPage", back);
+    },
     goMovieDetail(movie) {
       return `/movie/movie-detail?movieId=${movie.id}`;
     },

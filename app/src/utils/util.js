@@ -1,3 +1,5 @@
+import { Toast } from 'vant'
+
 export const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -56,7 +58,6 @@ export const getRandom = (lowerValue, upperValue, isFormat) => {
   }
 }
 export const throttle = (func, wait) => {
-
   var context, args
   var previous = 0
   return function () {
@@ -68,4 +69,20 @@ export const throttle = (func, wait) => {
       previous = now
     }
   }
+}
+
+export const showToast = (title, icon, dur) => {
+  Toast({
+    message: title,
+    icon: icon,
+    duration: dur
+  });
+}
+
+export const showSuccess = (title) => {
+  Toast.success(title);
+}
+
+export const showFail = (title) => {
+  Toast.fail(title);
 }

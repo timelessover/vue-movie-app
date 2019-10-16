@@ -36,6 +36,11 @@ export default new Router({
       component: () => import('./views/movie-detail.vue')
     },
     {
+      path: '/movie/buy-ticket',
+      name: '购票',
+      component: () => import('./views/buy-ticket.vue')
+    },
+    {
       path: '/movie/movie-detail/comment-detail',
       name: '电影评论',
       component: () => import('./views/comment-detail.vue')
@@ -72,6 +77,17 @@ export default new Router({
       component: () => import('./views/cinema-detail.vue')
     },
     {
+      path: '/cinema/snack-page',
+      name: '零食',
+      component: () => import('./views/snack-page.vue')
+    },
+    
+    {
+      path: '/cinema/buy-snack',
+      name: '购买零食',
+      component: () => import('./views/buy-snack.vue')
+    },
+    {
       path: '/cinema/select-seat',
       name: '选择座位',
       component: () => import('./views/select-seat.vue')
@@ -93,6 +109,21 @@ export default new Router({
       name: '我的',
       meta: { navShow: true },
       component: () => import('./views/user.vue')
+    },
+    {
+      path: '/my/snack-order',
+      name: '我的零食',
+      component: () => import('./views/snack-order.vue')
+    },
+    {
+      path: '/my/movie-order',
+      name: '我的电影',
+      component: () => import('./views/movie-order.vue')
+    },
+    {
+      path: '/my/movie-order-detail',
+      name: '影院详情',
+      component: () => import('./views/movie-order-detail.vue')
     },
 
     {

@@ -36,4 +36,11 @@ export const seatingPlan = async (ctx, next) => {
     const res = await request.post(`/ajax/seatingPlan?timestamp=${new Date().getTime()}`, params)
     handleStatus(res, ctx)
 }
+// 零食页面
+export const dealGoods = async (ctx, next) => {
+    const params = ctx.query
+    const res = await request.post('/deal/goods/price?_v_=yes&token=Lr1JB4uL_hSEkZDDsdk-iScZO4sAAAAAPAkAACEVR5xnZ6yjhR8UBdVz5vqNrNYQGD0TI6EtH7O3CydkmGkjBtdPSIhQfLW9vNlJeg', params)
+    handleStatus(res, ctx)
+}
+
 

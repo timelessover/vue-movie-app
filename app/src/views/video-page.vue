@@ -174,7 +174,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .video-box {
   width: 100%;
   height: 420px;

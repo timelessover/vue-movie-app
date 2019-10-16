@@ -97,7 +97,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .comment-title {
   height: 60px;
   font-size: 28px;

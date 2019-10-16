@@ -1,96 +1,101 @@
 <template>
-	<div v-if="cinemaDetail">
-		<!-- <cinemaMap :cinemaData='cinemaDetail.cinemaData'/> -->
-		<select-movie :movies="movies" @selectMovie="selectMovie" :defaultSelectID="movieId"/>
-		<div class="movie-info" v-if="movie">
-			<div class="movie-title line-ellipsis">
-				<span class="title">{{movie.nm}}</span>
-				<span class="grade">
-					<span v-if="!movie.globalReleased">
-						{{movie.wish}}
-						<span class="small">人想看</span>
-					</span>
-					<span v-else-if="movie.sc!=='0.0'">
-						{{movie.sc}}
-						<span class="small">分</span>
-					</span>
-					<span v-else>
-						<span class="small">暂无评分</span>
-					</span>
-				</span>
-			</div>
-			<div class="movie-desc line-ellipsis">{{movie.desc}}</div>
-		</div>
-		<div>
-			<selectTime :days="days" @selectDayEvent="selectDay" :day="day"/>
-		</div>
-		<div>
-			<div v-if="timeList.length">
-				<div class="item" v-for="(item,index) in timeList" :key="index" @click="seatChoose(item)">
-					<div class="time-block box">
-						<div class="begin">{{item.tm}}</div>
-						<div class="end">{{item.endTime}} 散场</div>
-					</div>
-					<div class="info-block box">
-						<div class="lan line-ellipsis">{{item.lang}} {{item.tp}}</div>
-						<div class="hall line-ellipsis">{{item.th}}</div>
-					</div>
-					<div class="price box">
-						<div class="price-box line-ellipsis">
-							<div class="sellPr">
-								<span class="stonefont">{{(item.vipPrice && item.vipPrice*1+10) || 37 }}</span>
-								<span class="d">元</span>
-							</div>
-							<div class="vipPrice" v-if="item.vipPriceName || item.vipPriceNameNew">
-								<span class="icon">{{item.vipPriceName || item.vipPriceNameNew}}</span>
-								<span class="num">{{item.vipPrice}}</span>
-							</div>
-						</div>
-						<div class="discount line-ellipsis" v-if="item.extraDesc">{{item.extraDesc}}</div>
-					</div>
-					<div class="button-block">
-						<div class="button">购票</div>
-					</div>
-				</div>
-			</div>
-			<div v-else class="no-seat">
-				<img src="../assets/images/cinema2.png">
-				<span>{{movie.globalReleased ?'今日场次已映完':'影片未上映'}}</span>
-			</div>
-		</div>
-		<div class="tuan-list" v-if="divideDealList.length">
-			<div class="title">影院超值套餐</div>
-			<div class="tuan-item" v-for="(item,index) in divideDealList" :key="index">
-				<div v-for="(i,index) in item.dealList" :key="index" class="snack-item" @click="goSnackPage(i)">
-					<div>
-						<img :src="i.imageUrl">
-					</div>
-					<div class="snack-info">
-						<div class="first-title">{{i.firstTitle}}</div>
-						<div class="second-title line-ellipsis">{{i.secondTitle}}</div>
-						<div class="snack-price">
-							<div>
-								<span class="num">{{i.price}}</span>
-								<span class="rmb">元</span>
-								<span class="font">影院价:{{i.value}}元</span>
-							</div>
-							<div class="font">{{i.curNumberDesc}}</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div v-if="cinemaDetail">
+    <cinemaMap :cinemaData="cinemaDetail.cinemaData"/>
+    <select-movie :movies="movies" @selectMovie="selectMovie" :defaultSelectID="movieId"/>
+    <div class="movie-info" v-if="movie">
+      <div class="movie-title line-ellipsis">
+        <span class="title">{{movie.nm}}</span>
+        <span class="grade">
+          <span v-if="!movie.globalReleased">
+            {{movie.wish}}
+            <span class="small">人想看</span>
+          </span>
+          <span v-else-if="movie.sc!=='0.0'">
+            {{movie.sc}}
+            <span class="small">分</span>
+          </span>
+          <span v-else>
+            <span class="small">暂无评分</span>
+          </span>
+        </span>
+      </div>
+      <div class="movie-desc line-ellipsis">{{movie.desc}}</div>
+    </div>
+    <div>
+      <selectTime :days="days" @selectDayEvent="selectDay" :day="day"/>
+    </div>
+    <div>
+      <div v-if="timeList.length">
+        <div class="item" v-for="(item,index) in timeList" :key="index" @click="seatChoose(item)">
+          <div class="time-block box">
+            <div class="begin">{{item.tm}}</div>
+            <div class="end">{{item.endTime}} 散场</div>
+          </div>
+          <div class="info-block box">
+            <div class="lan line-ellipsis">{{item.lang}} {{item.tp}}</div>
+            <div class="hall line-ellipsis">{{item.th}}</div>
+          </div>
+          <div class="price box">
+            <div class="price-box line-ellipsis">
+              <div class="sellPr">
+                <span class="stonefont">{{(item.vipPrice && item.vipPrice*1+10) || 37 }}</span>
+                <span class="d">元</span>
+              </div>
+              <div class="vipPrice" v-if="item.vipPriceName || item.vipPriceNameNew">
+                <span class="icon">{{item.vipPriceName || item.vipPriceNameNew}}</span>
+                <span class="num">{{item.vipPrice}}</span>
+              </div>
+            </div>
+            <div class="discount line-ellipsis" v-if="item.extraDesc">{{item.extraDesc}}</div>
+          </div>
+          <div class="button-block">
+            <div class="button">购票</div>
+          </div>
+        </div>
+      </div>
+      <div v-else class="no-seat">
+        <img src="../assets/images/cinema2.png">
+        <span>{{movie.globalReleased ?'今日场次已映完':'影片未上映'}}</span>
+      </div>
+    </div>
+    <div class="tuan-list" v-if="divideDealList.length">
+      <div class="title">影院超值套餐</div>
+      <div class="tuan-item" v-for="(item,index) in divideDealList" :key="index">
+        <div
+          v-for="(i,index) in item.dealList"
+          :key="index"
+          class="snack-item"
+          @click="goSnackPage(i)"
+        >
+          <div>
+            <img :src="i.imageUrl">
+          </div>
+          <div class="snack-info">
+            <div class="first-title">{{i.firstTitle}}</div>
+            <div class="second-title line-ellipsis">{{i.secondTitle}}</div>
+            <div class="snack-price">
+              <div>
+                <span class="num">{{i.price}}</span>
+                <span class="rmb">元</span>
+                <span class="font">影院价:{{i.value}}元</span>
+              </div>
+              <div class="font">{{i.curNumberDesc}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-// import cinemaMap from '@/components/cinemaMap.vue'
+import cinemaMap from "@/components/cinemaMap.vue";
 import selectMovie from "@/components/select-movie.vue";
 import selectTime from "@/components/select-time.vue";
 import { getRandom, formatNumber } from "utils/util";
 export default {
   components: {
-    // cinemaMap,
+    cinemaMap,
     selectMovie,
     selectTime
   },
@@ -112,7 +117,7 @@ export default {
     };
   },
   created() {
-	this.tabBarSetting('影院详情',true)
+    this.tabBarSetting("影院详情", true);
     const options = this.$route.query;
     this.initPage(options);
   },
@@ -269,31 +274,26 @@ export default {
   align-items: center;
   width: 100%;
   height: 460px;
+  span {
+    margin-top: 24px;
+    line-height: 1;
+    font-size: 32px;
+    color: #acacac;
+  }
+  img {
+    width: 155px;
+    height: 143px;
+  }
 }
-
-.no-seat img {
-  width: 155px;
-  height: 143px;
-}
-
-.no-seat span {
-  margin-top: 24px;
-  line-height: 1;
-  font-size: 32px;
-  color: #acacac;
-}
-
 .item {
   display: flex;
-  height: 84px;
-  padding: 30px 30px 30px 0;
+  padding: 15px 30px 20px 0;
   margin: 0 0 0 30px;
   border-bottom: 1px solid #e6e6e6;
   color: #333;
-}
-
-.item:last-child {
-  border: none;
+  &:last-child{
+    border: none;
+  }
 }
 
 .box {
@@ -364,22 +364,20 @@ export default {
   border: 1px solid #ff9000;
   border-radius: 2px;
   font-size: 22px;
-}
-
-.vipPrice .icon {
-  display: inline-block;
-  font-size: 22px;
-  padding: 0 2px;
-  color: #fff;
-  background-color: #f90;
-}
-
-.vipPrice .num {
-  display: inline-block;
-  font-size: 22px;
-  padding: 0 2px;
-  color: #f90;
-  background-color: #fff;
+  .icon {
+    display: inline-block;
+    font-size: 22px;
+    padding: 0 2px;
+    color: #fff;
+    background-color: #f90;
+  }
+  .num {
+    display: inline-block;
+    font-size: 22px;
+    padding: 0 2px;
+    color: #f90;
+    background-color: #fff;
+  }
 }
 
 .discount {
@@ -409,14 +407,14 @@ export default {
 
 .tuan-list {
   padding-left: 30px;
-  border-top: 20px solid #f5f5f5;
-}
-
-.tuan-list .title {
-  height: 90px;
-  line-height: 90px;
-  font-size: 30px;
-  color: #999;
+  border-top: 5px solid #f5f5f5;
+  margin-top: 30px;
+  .title {
+    height: 90px;
+    line-height: 90px;
+    font-size: 30px;
+    color: #999;
+  }
 }
 
 .snack-item {
@@ -425,12 +423,11 @@ export default {
   box-sizing: border-box;
   border-top: 1px solid #e6e6e6;
   padding: 26px 30px 26px 0;
-}
-
-.snack-item img {
-  width: 160px;
-  height: 160px;
-  margin-right: 20px;
+  img {
+    width: 160px;
+    height: 160px;
+    margin-right: 20px;
+  }
 }
 
 .snack-info {

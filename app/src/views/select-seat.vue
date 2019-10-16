@@ -78,7 +78,6 @@
 import { seat } from "utils/seat.js";
 import { Toast } from "vant";
 import { mapState, mapMutations } from "vuex";
-import axios from "axios";
 
 export default {
   data() {
@@ -183,9 +182,7 @@ export default {
       this.info.totalPrice = this.totalPrice;
       this.info.seats = this.choosedSeats;
       const info = JSON.stringify(this.info);
-      //   uni.navigateTo({
-      //     url: `/pages/buy-ticket/buy-ticket?paramsStr=${info}`
-      //   });
+      this.$router.push(`/movie/buy-ticket?paramsStr=${info}`)
     },
     getSeatDetail() {
       const params = {
@@ -199,12 +196,6 @@ export default {
         optimus_code: 10,
         seqNo: this.seqNo
       };
-      //   axios({
-      // 	  headers:{'User-Agent':'Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Mobile Safari/537.36'}
-      //   })
-      //   axios.get('http://m.maoyan.com/ajax/seatingPlan', params).then(res=>{
-      // 	  console.log(res)
-      //   })
       this.$http.post("/cinemas/seatingPlan", params).then(res => {
         const data = res.data.seatData;
         this.tabBarSetting(data.cinema.cinemaName, true);
@@ -256,7 +247,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .select-page {
   font-size: 14px;
   color: #777;

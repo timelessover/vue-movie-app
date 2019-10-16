@@ -1,7 +1,7 @@
 <template>
   <div id="app" v-cloak>
     <Header :title="title" :back="back"></Header>
-      <router-view/>
+    <router-view/>
     <nav-footer v-if="$route.meta.navShow"></nav-footer>
   </div>
 </template>
@@ -10,6 +10,7 @@
 import navFooter from "@/components/navFooter";
 import Header from "@/components/header.vue";
 import { mapState, mapMutations } from "vuex";
+import { Dialog } from "vant";
 export default {
   components: {
     navFooter,
@@ -19,10 +20,10 @@ export default {
     title() {
       return this.$store.state.headerTitle;
     },
-    back(){
+    back() {
       return this.$store.state.backPage;
     }
-  }
+  },
 };
 </script>
 
@@ -108,4 +109,5 @@ export default {
     background-color: #faaf00;
   }
 }
+
 </style>

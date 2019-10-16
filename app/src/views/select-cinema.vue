@@ -195,7 +195,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .top {
   color: #555;
   font-size: 28px;
