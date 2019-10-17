@@ -27,7 +27,7 @@
 		</div>
 		<div class="price-box box">
 			<div>猫眼订单号：{{order.orderId}}</div>
-			<div>总价：{{order.price}}元</div>
+			<div>总价：{{order.price*order.seats.length}}元</div>
 		</div>
 		<div class="map-box">
 			<cinemaMap :cinemaData="order.cinemaData"></cinemaMap>
@@ -73,14 +73,13 @@ export default {
       this.$store.commit("IsBackPage", back);
     },
     initData(order) {
-	  console.log(order)
       this.order = order;
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container {
   width: 100vw;
   min-height: 100vh;

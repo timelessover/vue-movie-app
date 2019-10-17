@@ -25,7 +25,7 @@
       :finished="loadComplete"
       @load="onReachBottom"
     >
-      <div class="cinema-list">
+      <div class="cinema-list" >
         <cinemaSection v-for="(cinema,index) in cinemas" :key="index" :cinema="cinema"></cinemaSection>
       </div>
     </List>
@@ -169,7 +169,6 @@ export default {
   border: none;
   background-color: #f5f5f5;
 }
-
 .search-input {
   flex-grow: 1;
   height: 56px;

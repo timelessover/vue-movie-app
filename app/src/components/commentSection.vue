@@ -12,7 +12,7 @@
         <img class="movie-star" v-for="(item,index) in comment.stars" :key="index" :src="item">
       </div>
       <div class="content">{{comment.content}}</div>
-      <div class="footer">
+      <div class="comment-footer">
         <div class="comment-time">{{comment.calcTime}}</div>
         <div class="approve">
           <span class="iconfont icon-zan1"></span>
@@ -33,14 +33,14 @@ export default {
 };
 </script>
 
-<style lang='scss'>
+<style lang='scss' scpoed>
 .commentSection {
   display: flex;
   padding: 30px 0 0 30px;
   color: #555;
   .stars {
-    margin-top:10px;
-    line-height:12px;
+    margin-top: 10px;
+    line-height: 12px;
     .movie-star {
       width: 22px;
       height: 22px;
@@ -86,16 +86,16 @@ export default {
   margin: 20px 0;
 }
 
-.footer {
+.comment-footer {
   display: flex;
   justify-content: space-between;
   font-size: 24px;
   color: #999;
 }
-.approve .icon-zan1  {
-  font-size: 24px;
-}
-.icon-zan1{
-  margin-right: 5px;
+.approve {
+  .icon-zan1 {
+    font-size: 24px;
+    margin-right: 5px;
+  }
 }
 </style>

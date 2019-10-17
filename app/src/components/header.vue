@@ -1,9 +1,7 @@
 <template>
-    <div class="page-header" v-cloak>
+    <div class="page-header" style="margin-bottom:46px" v-cloak>
         <div v-if="$route.name !== 404 ">
-            <Sticky>
-                <nav-bar :title="title" :left-arrow="back" @click-left="$router.back(-1)"/>
-            </Sticky>
+                <nav-bar :title="title" :left-arrow="back" @click-left="$router.back(-1)" fixed/>
         </div>
     </div>
 </template>
@@ -12,8 +10,7 @@
 import { NavBar, Sticky } from "vant";
 export default {
   components: {
-    NavBar,
-    Sticky
+    NavBar
   },
   props: {
     title: {

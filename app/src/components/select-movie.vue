@@ -125,10 +125,8 @@ export default {
 
 .scroll-view_H {
   flex-wrap: nowrap;
-  overflow: auto;
   width: 100%;
   overflow: hidden;
-  overflow: auto;
 }
 
 .movie-item {

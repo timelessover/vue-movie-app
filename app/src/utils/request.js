@@ -23,7 +23,7 @@ const profix = (method, data, headers, url) => {
 		}
 		return res.data
 	}).catch((err) => {
-		console.log(err)
+		Toast.fail('网络出了些故障');
 	})
 }
 

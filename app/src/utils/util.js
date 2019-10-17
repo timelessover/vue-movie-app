@@ -71,7 +71,7 @@ export const throttle = (func, wait) => {
   }
 }
 
-export const showToast = (title, icon, dur) => {
+export const showToast = (title, icon, dur=1000) => {
   Toast({
     message: title,
     icon: icon,

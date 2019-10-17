@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import { storage } from 'utils/storage'
 
 Vue.use(Router);
 
-export default new Router({
-  mode: 'history',
+const router = new Router({
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
     {
@@ -73,42 +74,51 @@ export default new Router({
     },
     {
       path: '/cinema/cinema-detail',
-      name: '影院详情',
+      name: '券',
       component: () => import('./views/cinema-detail.vue')
     },
     {
       path: '/cinema/snack-page',
       name: '零食',
-      component: () => import('./views/snack-page.vue')
+      component: () => import('./views/snack-page.vue'),
+      meta: { requiresAuth: true }
     },
-    
+
     {
       path: '/cinema/buy-snack',
       name: '购买零食',
-      component: () => import('./views/buy-snack.vue')
+      component: () => import('./views/buy-snack.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/cinema/select-seat',
       name: '选择座位',
-      component: () => import('./views/select-seat.vue')
+      component: () => import('./views/select-seat.vue'),
+      meta: { requiresAuth: true }
     },
     {
-      path: '/login',
-      name: '登陆',
-      component: () => import('./views/login.vue'),
+      path: '/auth',
+      name: '授权',
+      component: () => import('./views/auth.vue'),
       children: [
+        {
+          path: 'login',
+          name: '登陆',
+          component: () => import('./views/login.vue')
+        },
         {
           path: 'register',
           name: '注册',
-          component: () => import('./views/cinema.vue')
+          component: () => import('./views/register.vue')
         }
       ],
     },
     {
       path: '/user',
       name: '我的',
-      meta: { navShow: true },
-      component: () => import('./views/user.vue')
+      meta: { navShow: true, requiresAuth: true },
+      component: () => import('./views/user.vue'),
+
     },
     {
       path: '/my/snack-order',
@@ -122,10 +132,9 @@ export default new Router({
     },
     {
       path: '/my/movie-order-detail',
-      name: '影院详情',
+      name: '影券详情',
       component: () => import('./views/movie-order-detail.vue')
     },
-
     {
       path: '*',
       name: 404,
@@ -133,3 +142,23 @@ export default new Router({
     }
   ],
 });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!storage.get('token')) {
+      next({
+        path: '/auth/login',
+        query: { redirect: to.fullPath }
+      })
+    }else{
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+
+
+
+
+export default router

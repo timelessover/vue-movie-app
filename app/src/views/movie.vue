@@ -106,7 +106,6 @@ export default {
 }
 
 .switch-content {
-  padding-top: 16;
   padding-bottom: 100px;
 }
 

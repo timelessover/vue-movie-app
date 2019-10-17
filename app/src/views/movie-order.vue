@@ -1,5 +1,5 @@
 <template>
-	<div class="container order-list-page">
+	<div class="order-list-page">
 		<div v-for="(item,index) in orderList" :key="index" class="order-item">
 			<router-link class="order-title line-ellipsis" :to="navUrl(item)" hover-class="none">
 				<div>{{item.cinemaName}}</div>
@@ -17,7 +17,7 @@
 				</div>
 			</div>
 			<div class="order-more">
-				<div>总价：{{item.price}}元</div>
+				<div>总价：{{item.price*item.seats.length}}元</div>
 				<div class="status">已完成</div>
 			</div>
 		</div>
