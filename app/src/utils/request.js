@@ -1,5 +1,5 @@
 import axios from 'axios'
-const BASE_URL = 'http://localhost:3005'
+const BASE_URL = 'http://49.232.12.131:3005'
 import { Toast } from 'vant';
 
 const profix = (method, data, headers, url) => {
