@@ -1,23 +1,23 @@
 <template>
   <div class="container">
-    <Sticky :offset-top="46">
-    <div class="topbar">
-      <router-link class="city-entry" to="/city-select">
-        <span class="city-name">{{city}}</span>
-        <span class="city-entry-arrow"></span>
-      </router-link>
-      <router-link to="/movie/search-page?stype=2" class="search-input">
-        <span class="iconfont icon-sousuo"></span>搜影院
-      </router-link>
+    <div style="padding-bottom: 92px;">
+      <div style="position: fixed;">
+        <div class="topbar">
+          <router-link class="city-entry" to="/city-select">
+            <span class="city-name">{{city}}</span>
+            <span class="city-entry-arrow"></span>
+          </router-link>
+          <router-link to="/movie/search-page?stype=2" class="search-input">
+            <span class="iconfont icon-sousuo"></span>搜影院
+          </router-link>
+        </div>
+        <filter-nav
+          :city-cinema-info="cityCinemaInfo"
+          @change="changeCondition"
+          @toggleShow="toggleShow"
+        />
+      </div>
     </div>
-    <div class="nav-wrapper">
-      <filter-nav
-        :city-cinema-info="cityCinemaInfo"
-        @change="changeCondition"
-        @toggleShow="toggleShow"
-      />
-    </div>
-    </Sticky>
     <List
       :immediate-check="check"
       :offset="offset"
@@ -25,7 +25,7 @@
       :finished="loadComplete"
       @load="onReachBottom"
     >
-      <div class="cinema-list" >
+      <div class="cinema-list">
         <cinemaSection v-for="(cinema,index) in cinemas" :key="index" :cinema="cinema"></cinemaSection>
       </div>
     </List>
@@ -40,16 +40,16 @@ import cinemaSection from "@/components/cinemaSection.vue";
 import empty from "@/components/empty.vue";
 import filterNav from "@/components/filter-nav.vue";
 import { getToday } from "@/utils/util.js";
-import { Toast, List, Sticky  } from "vant";
+import { Toast, List } from "vant";
 import { mapState, mapMutations } from "vuex";
 
 export default {
+  name: "cinema",
   components: {
     cinemaSection,
     empty,
     filterNav,
-    List,
-    Sticky
+    List
   },
   data() {
     return {
@@ -98,9 +98,13 @@ export default {
     }
   },
   created() {
-    this.$store.commit('changeTitle',"影院")
-    this.$store.commit('IsBackPage',false)
+    this.$store.commit("changeTitle", "影院");
+    this.$store.commit("IsBackPage", false);
     this.initPage();
+  },
+  activated() {
+    this.$store.commit("changeTitle", "影院");
+    this.$store.commit("IsBackPage", false);
   },
   methods: {
     async initPage() {
@@ -165,10 +169,10 @@ export default {
 <style lang="scss" scoped>
 .topbar {
   width: 100vw;
-  height: 12vw;
   border: none;
   background-color: #f5f5f5;
 }
+
 .search-input {
   flex-grow: 1;
   height: 56px;
@@ -195,7 +199,6 @@ export default {
   height: 80px;
   background: #fff;
 }
-
 
 ::-webkit-scrollbar {
   width: 0;

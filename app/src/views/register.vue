@@ -1,12 +1,12 @@
 <template>
-    <div class="container">
-        <img class="logo" src="../assets/images/logo.png">
-        <input type="phone" placeholder="请输入手机号" v-model="phone">
-        <input type="password" v-model="password" placeholder="请输入密码" />
-        <div class="btn-warpper">
-            <button @click="register">注册</button>
-        </div>
+  <div class="container">
+    <img class="logo" src="../assets/images/logo.png">
+    <input type="phone" placeholder="请输入手机号" v-model="phone">
+    <input type="password" v-model="password" placeholder="请输入密码">
+    <div class="btn-warpper">
+      <button @click="register">注册</button>
     </div>
+  </div>
 </template>
 
 <script>
@@ -14,18 +14,23 @@ export default {
   data() {
     return {
       phone: "",
-      password: ""
+      password: "",
+      query:""
     };
   },
   created() {
-      this.$store.commit('changeTitle',"注册")
-      this.$store.commit('IsBackPage')
+    if(this.$storage.get('token')){
+      this.$router.go(-1)
+    }
+    this.query = this.$route.query.redirect || ''
+    this.$store.commit("changeTitle", "注册");
+    this.$store.commit("IsBackPage");
   },
   methods: {
     goLogin(arr, phone, password) {
       arr.push({ phone: phone, password: password });
       this.$storage.set("users", arr);
-      this.$router.push("/auth/login");
+      this.$router.push(`/auth/login?redirect=${this.query}`);
     },
     register() {
       const { phone, password } = this;
@@ -34,14 +39,19 @@ export default {
       if (TEL_REGEXP.test(phone) && password.length >= 6) {
         if (!this.$storage.get("users")) {
           arr = [];
-          this.goLogin(arr, phone, password);
+          this.$showToast("注册成功");
+          setTimeout(() => {
+            this.goLogin(arr, phone, password);
+          }, 1000);
         } else {
-          arr = this.$stroage.get("users");
+          arr = this.$storage.get("users");
           arr.forEach(item => {
             if ((item.phone = phone)) {
               this.$showToast("该账户已注册");
             } else {
-              this.goLogin(arr, phone, password);
+              setTimeout(() => {
+                this.goLogin(arr, phone, password);
+              }, 1000);
             }
           });
         }
@@ -62,14 +72,14 @@ export default {
   height: 200px;
   width: 200px;
   display: block;
-  margin: 60px auto;
+  margin: 200px auto 60px;
 }
 input {
   padding: 15px;
   margin-bottom: 15px;
   border-bottom: 1px solid #d6d6d6;
   margin-left: 40px;
-  width:90%;
+  width: 90%;
 }
 .btn-warpper {
   margin: 50px 30px;

@@ -2,16 +2,16 @@
   <div>
     <div class="most-expected" v-if="mostExpectedList.length">
       <div class="title">近期最受期待</div>
-        <div class="scroll-view_H">
-          <div v-for="(movie) in mostExpectedList" :key="movie.id">
-            <router-link to="movie.url" class="expected-item">
-              <img :src="movie.img" class="poster">
-              <div class="name line-ellipsis">{{movie.nm}}</div>
-              <div class="data line-ellipsis">{{movie.wish}}人想看</div>
-              <div class="data">{{movie.comingTitle}}</div>
-            </router-link>
-          </div>
+      <div class="scroll-view_H">
+        <div v-for="(movie) in mostExpectedList" :key="movie.id">
+          <router-link :to="movie.url" class="expected-item">
+            <img :src="movie.img" class="poster">
+            <div class="name line-ellipsis">{{movie.nm}}</div>
+            <div class="data line-ellipsis">{{movie.wish}}人想看</div>
+            <div class="data">{{movie.comingTitle}}</div>
+          </router-link>
         </div>
+      </div>
     </div>
     <List
       :immediate-check="check"
@@ -54,16 +54,20 @@ export default {
     };
   },
   created() {
-    this.$store.commit('changeTitle',"待映")
+    this.$store.commit("changeTitle", "待映");
     this.getMostExpected();
     this.getComing();
+  },
+  activated() {
+    this.$store.commit("changeTitle", "热映");
+    this.$store.commit('IsBackPage',false)
   },
   methods: {
     async getComing(index = 0) {
       const res = await this.$http.get("/movie/mostExpected");
       let mostExpectedList = this.formatImgUrl(res.data.coming, true);
       mostExpectedList.forEach(item => {
-        item.url = `movie-detail/movie-detail?movieId=${item.id}`;
+        item.url = `/movie/movie-detail?movieId=${item.id}`;
       });
       this.mostExpectedList = mostExpectedList;
     },

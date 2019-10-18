@@ -10,7 +10,7 @@ module.exports = {
     productionSourceMap: true,
     // 开启 CSS source maps?
     css:{
-        sourceMap: false,
+        sourceMap: true,
     },
     chainWebpack: config => {
         config.resolve.alias

@@ -1,7 +1,7 @@
 <template>
   <div class="movie">
-    <Sticky :offset-top="46">
-      <div class="topbar">
+    <div style="margin-bottom:92px">
+      <div class="topbar" style="position:fixed;top: 46px;left: 0;">
         <router-link class="city-entry" to="/city-select">
           <span class="city-name">{{city}}</span>
           <span class="city-entry-arrow"></span>
@@ -18,7 +18,7 @@
           <span class="iconfont icon-sousuo"></span>
         </router-link>
       </div>
-    </Sticky>
+    </div>
     <div class="switch-content">
       <router-view></router-view>
     </div>
@@ -26,32 +26,27 @@
 </template>
 
 <script>
-import { Sticky } from "vant";
 import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "movie",
-  components: {
-    Sticky
-  },
   data() {
     return {
       tabList: [
         {
           title: "热映",
-          url: '/movie/hot'
+          url: "/movie/hot"
         },
         {
           title: "待映",
-          url: '/movie/expected'
+          url: "/movie/expected"
         }
       ],
-      title:'热映'
+      title: "热映"
     };
   },
   created() {
-    this.$store.commit('IsBackPage',false)
-    
+    this.$store.commit("IsBackPage", false);
   },
   computed: {
     city() {
@@ -64,10 +59,10 @@ export default {
   },
   methods: {
     selectItem(item) {
-      if(this.$route.path === item.url) return
-      this.title = item.title
-      this.$router.push(item.url)
-    },
+      if (this.$route.path === item.url) return;
+      this.title = item.title;
+      this.$router.push(item.url);
+    }
   }
 };
 </script>

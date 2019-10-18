@@ -104,11 +104,13 @@ const router = new Router({
         {
           path: 'login',
           name: '登陆',
+          meta: { auth: true },
           component: () => import('./views/login.vue')
         },
         {
           path: 'register',
           name: '注册',
+          meta: { auth: true },
           component: () => import('./views/register.vue')
         }
       ],
@@ -136,12 +138,19 @@ const router = new Router({
       component: () => import('./views/movie-order-detail.vue')
     },
     {
+      path: '/my/about',
+      name: '关于我',
+      component: () => import('./views/about-page.vue')
+    },
+    {
       path: '*',
       name: 404,
       component: () => import('./views/404.vue')
     }
   ],
 });
+
+
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!storage.get('token')) {
@@ -149,12 +158,13 @@ router.beforeEach((to, from, next) => {
         path: '/auth/login',
         query: { redirect: to.fullPath }
       })
-    }else{
+    } else {
       next()
     }
   } else {
     next()
   }
+
 })
 
 

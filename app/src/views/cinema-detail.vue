@@ -298,7 +298,7 @@ export default {
 
 .box {
   display: flex;
-  height: 84px;
+  height: 70px;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -358,8 +358,6 @@ export default {
 }
 
 .vipPrice {
-  height: 25px;
-  line-height: 25px;
   margin-top: 1px;
   border: 1px solid #ff9000;
   border-radius: 2px;

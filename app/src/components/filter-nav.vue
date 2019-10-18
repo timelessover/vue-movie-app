@@ -294,6 +294,7 @@ export default {
 <style lang='scss' scoped>
 .select-nav {
   font-size: 28px;
+  margin-top: -1px;
 }
 
 .tab {
@@ -331,18 +332,24 @@ export default {
   border-left: 1px solid #e6e6e6;
   border-right: 1px solid #e6e6e6;
 }
-
-.city-entry-arrow {
-  width: 0;
-  height: 0;
-  border: 8px solid #b0b0b0;
-  border-left-color: transparent;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  display: inline-block;
-  vertical-align: span-top;
-  margin-left: 8px;
-  margin-top: 10px;
+.city-entry {
+  padding-left: 30px;
+  font-size: 30px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  .city-entry-arrow {
+    width: 0;
+    height: 0;
+    border: 8px solid #b0b0b0;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    display: inline-block;
+    vertical-align: span-top;
+    margin-left: 8px;
+    margin-top: 10px;
+  }
 }
 
 .select-item {
@@ -359,7 +366,7 @@ export default {
 
 .nav-content {
   .nav-content-item {
-     z-index: 999;
+    z-index: 999;
     position: relative;
     width: 100vw;
     height: calc(100vh * 0.6);

@@ -1,7 +1,10 @@
 <template>
   <div id="app" v-cloak>
     <Header :title="title" :back="back"></Header>
-    <router-view/>
+    <!-- https://cn.vuejs.org/v2/api/#keep-alive keepalive缓存策略-->
+    <keep-alive include="movie,cinema">
+      <router-view/>
+    </keep-alive>
     <nav-footer v-if="$route.meta.navShow"></nav-footer>
   </div>
 </template>
@@ -23,7 +26,7 @@ export default {
     back() {
       return this.$store.state.backPage;
     }
-  },
+  }
 };
 </script>
 
@@ -81,7 +84,8 @@ export default {
   border-bottom-color: transparent;
   display: inline-block;
   margin-left: 8px;
-  margin-top: 10px;
+  margin-top: 20px;
+  padding-top: 4px;
 }
 
 .phcolor {
@@ -109,5 +113,7 @@ export default {
     background-color: #faaf00;
   }
 }
-
+.van-field__control {
+  line-height: 23px;
+}
 </style>

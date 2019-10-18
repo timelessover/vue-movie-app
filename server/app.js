@@ -56,7 +56,7 @@ app.use(cors());
 
 
 app.use(views(__dirname + '/views', {
-  extension: 'pug,html'
+  extension: 'html'
 }))
 
 // logger

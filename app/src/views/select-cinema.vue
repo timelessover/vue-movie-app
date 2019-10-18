@@ -53,6 +53,7 @@ import { mapState, mapMutations } from "vuex";
 import { List,Sticky  } from "vant";
 
 export default {
+  name:'select-cinema',
   components: {
     selectTime,
     filterNav,

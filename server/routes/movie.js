@@ -6,6 +6,12 @@ router.prefix('/movie')
 
 
 // 最期待的电影
+router.get('/',  async (ctx) => {
+  let title = 'Hello Koa2'
+  await ctx.render('index', { title })
+})
+
+// 最期待的电影
 router.get('/mostExpected', async (ctx) => {
   await mostExpected(ctx)
 })

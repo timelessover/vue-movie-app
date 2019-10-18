@@ -18,10 +18,15 @@ export default {
   data() {
     return {
       phone: "",
-      password: ""
+      password: "",
+      query:""
     };
   },
   created() {
+    if(this.$storage.get('token')){
+      this.$router.go(-1)
+    }
+    this.query = this.$route.query.redirect || '/user'
     this.$store.commit("changeTitle", "登陆");
     this.$store.commit("IsBackPage");
   },
@@ -33,20 +38,21 @@ export default {
           this.$showToast("您还未注册", "", 1000);
         }
         const users = this.$storage.get("users") || [];
+        
         users.forEach(item => {
           if (item.phone === phone && item.password === password) {
-            this.$storage.set("token", "dsadsajlkjl");
-            this.$router.push("/user");
+            this.$storage.set("token", `dsadsajlkjl${Math.floor(Math.random() * (100 - 1)) + 1}`);
+            this.$router.push(this.query);
           } else {
-            this.$showToast("账号或密码有误", "", 1000);
+            this.$showToast("账号或密码有误");
           }
         });
       } else {
-        this.$showToast("请填写账号和密码", "", 1000);
+        this.$showToast("请填写账号和密码");
       }
     },
     goRegtister() {
-      this.$router.push("/auth/register");
+      this.$router.push(`/auth/register?redirect=${this.$route.query.redirect}`);
     },
     goMovie() {
       this.$router.push("/movie");

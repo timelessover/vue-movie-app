@@ -79,26 +79,25 @@
 <script>
 import { handleImgandStars } from "@/mixin/handleImgandStars.js";
 import commentSection from "@/components/commentSection.vue";
-import { ImagePreview, Lazyload } from "vant";
-import { mapState, mapMutations } from "vuex";
+import { ImagePreview } from "vant";
 
 export default {
   components: {
     commentSection,
-    ImagePreview,
-    Lazyload
+    ImagePreview
   },
   mixins: [handleImgandStars],
   data() {
     return {
       detailMovie: null, //电影详情
       isFold: true,
-      comments: {} //观众评论
+      comments: {}, //观众评论
+      viewImg: null
     };
   },
   created() {
-    this.$store.commit('changeTitle',"电影详情")
-    this.$store.commit('IsBackPage',true)
+    this.$store.commit("changeTitle", "电影详情");
+    this.$store.commit("IsBackPage", true);
     const movieId = this.$route.query.movieId;
     this.initPage(movieId);
   },
@@ -110,18 +109,23 @@ export default {
     },
     watchAllUrl() {
       if (this.detailMovie) {
-        return `/movie/movie-detail/comment-detail?movieId=${this.detailMovie.id}&movieName=${
-          this.detailMovie.nm
-        }`;
+        return `/movie/movie-detail/comment-detail?movieId=${
+          this.detailMovie.id
+        }&movieName=${this.detailMovie.nm}`;
       }
     },
     purchaseUrl() {
       if (this.detailMovie) {
-        return `/movie/movie-detail/select-cinema?movieId=${this.detailMovie.id}&movieName=${
-          this.detailMovie.nm
-        }&showTime=${this.detailMovie.rt}`;
+        return `/movie/movie-detail/select-cinema?movieId=${
+          this.detailMovie.id
+        }&movieName=${this.detailMovie.nm}&showTime=${this.detailMovie.rt}`;
       }
     }
+  },
+  // 这个要后退时候卸载组件，要不会出现bug
+  beforeRouteLeave(to, from, next) {
+    this.viewImg && this.viewImg.close();
+    next()
   },
   methods: {
     //初始页面
@@ -145,11 +149,12 @@ export default {
       const urls = this.detailMovie.photos.map(item =>
         item.replace("420w_279h", "375w_250h")
       );
-      ImagePreview({
+      this.viewImg = ImagePreview({
         images: urls,
         startPosition: currentIndex
       });
     },
+
     //处理数据
     handleData(data) {
       let obj = data;
@@ -195,7 +200,9 @@ export default {
         sc: detailMovie.sc, //评分
         showst: detailMovie.showst //判读“想看”、“预售”
       });
-      this.$router.push(`/movie/movie-detail/video-page?paramsStr=${paramsStr}`);
+      this.$router.push(
+        `/movie/movie-detail/video-page?paramsStr=${paramsStr}`
+      );
     }
   }
 };

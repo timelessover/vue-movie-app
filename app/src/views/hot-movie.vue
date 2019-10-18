@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <List
       :immediate-check="check"
       v-model="loading"
@@ -43,11 +43,15 @@ export default {
     };
   },
   created() {
-    this.$store.commit('changeTitle',"热映")
+    this.$store.commit("changeTitle", "热映");
     this.getFrirstList();
   },
   watch: {
-    movieIds:'onLoad'
+    movieIds: "onLoad"
+  },
+  activated() {
+    this.$store.commit("changeTitle", "热映");
+    this.$store.commit('IsBackPage',false)
   },
   methods: {
     async getFrirstList() {

@@ -1,45 +1,34 @@
 <template>
-    <div class="container">
-        <div class="header">
-            <div v-if="hasToken">
-                <img src="" class="avatar">
-                <span class="name"></span>
-            </div>
-        </div>
-        <div class="order">
-            <div class="title-box">
-                <div class="title">我的订单</div>
-                <div class="title-line"></div>
-            </div>
-            <div class="order-list">
-                <router-link class="order-item" to="/my/movie-order">
-                    <img src="../assets/images/order_movie.png">
-                    <div>电影</div>
-                </router-link>
-                <router-link class="order-item" to="/my/snack-order">
-                    <img src="../assets/images/order_store.png">
-                    <div>小吃</div>
-                </router-link>
-            </div>
-        </div>
-        <div class="other">
-            <div class="share other-item">
-                <button open-type="share" class="btn">
-                    <span class="iconfont icon-fenxiang"></span>分享给朋友
-                </button>
-            </div>
-            <div class="customer other-item">
-                <button class="btn">
-                    <span class="iconfont icon-lianxikefu"></span>客服反馈
-                </button>
-            </div>
-            <div class="about other-item">
-                <router-link to="/pages/about-page/about-page">
-                    <span class="iconfont icon-guanyuwomen"></span>关于
-                </router-link>
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <img src="../assets/images/avatar.png" class="avatar">
+      <span class="name">{{userName}}</span>
     </div>
+    <div class="order">
+      <div class="title-box">
+        <div class="title">我的订单</div>
+        <div class="title-line"></div>
+      </div>
+      <div class="order-list">
+        <router-link class="order-item" to="/my/movie-order">
+          <img src="../assets/images/order_movie.png">
+          <div>电影</div>
+        </router-link>
+        <router-link class="order-item" to="/my/snack-order">
+          <img src="../assets/images/order_store.png">
+          <div>小吃</div>
+        </router-link>
+      </div>
+    </div>
+    <div class="other">
+      <div class="about other-item">
+        <router-link to="/my/about">
+          <span class="iconfont icon-guanyuwomen"></span>关于
+        </router-link>
+      </div>
+    </div>
+    <div class="loginOut" @click="loginOut">退出</div>
+  </div>
 </template>
 
 <script>
@@ -50,13 +39,19 @@ export default {
       hasToken: false
     };
   },
+  computed: {
+    userName() {
+      return this.$storage.get("users")[0].phone;
+    }
+  },
   created() {
-    this.$store.commit('changeTitle',"我的")
-    this.$store.commit('IsBackPage',false)
-    if (!this.$storage.get("token")) {
-      // this.$router.go(-1);
-    } else {
-      this.hasToken = true;
+    this.$store.commit("changeTitle", "我的");
+    this.$store.commit("IsBackPage", false);
+  },
+  methods: {
+    loginOut() {
+        this.$storage.remove('token')
+        this.$router.push('/auth/login')
     }
   },
 };
@@ -66,6 +61,8 @@ export default {
 .container {
   width: 100vw;
   background: #f3f3f3;
+  min-height: calc(100vh - 100px);
+  padding-bottom:100px;
   .header {
     display: flex;
     flex-direction: column;
@@ -82,7 +79,7 @@ export default {
       width: 120px;
       height: 120px;
       border-radius: 120px;
-      border: 3px solid #fff;
+      border: 1px solid #fff;
       overflow: hidden;
     }
     .name {
@@ -207,5 +204,13 @@ export default {
   .iconfont {
     opacity: 0.8;
   }
+}
+.loginOut {
+  text-align: center;
+  background: #e54847;
+  color: #fff;
+  padding: 15px 10px;
+  width: 90vw;
+  margin: 10vw auto;
 }
 </style>
