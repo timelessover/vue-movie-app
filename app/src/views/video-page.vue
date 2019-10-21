@@ -1,22 +1,6 @@
 <template>
   <div v-if="info && current !==-1">
-    <div class="video-box">
-      <div class="iconfont icon-zanting" v-show="play"></div>
-      <video
-        width="100%"
-        autoplay
-        preload="preload"
-        playsinline="true"
-        webkit-playsinline="true"
-        ref="videoPlayer"
-        @click="initVideo"
-        @ended="endHandle"
-        @error="errorHandle"
-        :src="currentVideo"
-      >
-        <!-- <source :src="currentVideo" type="video/mp4"> -->
-      </video>
-    </div>
+    <my-video :sources="currentVideo" :options="options" @errorHandler="errorHandle" />
     <div class="my-scroll">
       <div class="movie-intro-desc">
         <div class="name-box">
@@ -66,13 +50,21 @@
 <script>
 import { getRandom } from "utils/util.js";
 import {Toast} from 'vant';
+import myVideo from '@/components/my-video'
+
 export default {
+  components:{
+    myVideo
+  },
   data() {
     return {
       info: null,
       videoList: [], //播放列表
       current: 0, //当前播放视频索引
-      play: false
+      play: false,
+      options: {
+          autoplay: true
+        }
     };
   },
   created() {
@@ -87,7 +79,13 @@ export default {
   },
   computed: {
     currentVideo: function() {
-      return this.videoList[this.current].videourl;
+       const sources = [
+          {
+            src: this.videoList[this.current].videourl,
+            type: "video/mp4"
+          }
+        ]
+      return  sources
     }
   },
   methods: {
@@ -146,7 +144,6 @@ export default {
     //播放列表的点击事件
     selectItem(index) {
       if (index !== this.current) {
-        console.log(index);
         this.setCurrent(index);
       }
     },
@@ -179,20 +176,13 @@ export default {
   width: 100%;
   height: 420px;
   position: relative;
-  .icon-zanting {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #f5f5f5;
-    font-size: 100px;
-  }
+
 }
 
-#my-video {
-  width: 100%;
-  height: 420px;
-}
+// #my-video {
+//   width: 100%;
+//   height: 420px;
+// }
 
 .my-scroll {
   height: calc(100vh - 420px);

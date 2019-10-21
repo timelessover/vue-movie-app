@@ -1,15 +1,33 @@
+<template>
+  <div>
+    <my-video :sources="video.sources" :options="video.options"></my-video>
+  </div>
+</template>
+
 <script>
+import myVideo from "components/my-video.vue";
 
 export default {
-  name: "item",
-  props: {
-    id: {
-      type: Number,
-      default: 1
-    }
+  components: {
+    myVideo
   },
-  render() {
-    return <div ref="xx">123</div>;
+  data() {
+    return {
+      video: {
+        sources: [
+          {
+            src: "http://maoyan.meituan.net/movie/videos/888x4809946dfb95c0b439b84533b4262f9d74d.mp4",
+            type: "video/mp4"
+          }
+        ],
+        options: {
+          autoplay: true
+        }
+      }
+    };
   }
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

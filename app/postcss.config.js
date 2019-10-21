@@ -6,7 +6,7 @@ module.exports = {
       viewportWidth: 750,
       unitPrecision: 3,
       viewportUnit: 'vw',
-      selectorBlackList: ['.ignore', '.hairlines', 'van',], // (Array) The selectors to ignore and leave as px. 
+      selectorBlackList: ['van','__cov-contrl'], // (Array) The selectors to ignore and leave as px. 
       minPixelValue: 1, // (Number) Set the minimum pixel value to replace. 
       mediaQuery: false // (Boolean) Allow px to be converted in media queries.
     }
