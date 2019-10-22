@@ -1,11 +1,1 @@
-# :rainbow:koa练习
-+ ES6module语法
-+ fs支持链式调用
-+ jwt鉴权
-+ cookie-session鉴权
-+ redis缓存
-+ moongose的CRUD
-+ 登陆验证码
-+ 服务端请求
-+ cors跨域
-+ socket.io
+
