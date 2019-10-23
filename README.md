@@ -39,57 +39,7 @@ Vue-Movie-APP
 
 |   |   |   `-- images(项目图片)
 
-|   |   |       |-- avatar.png
-
-|   |   |       |-- bought.png
-
-|   |   |       |-- cinema.png
-
-|   |   |       |-- cinema2.png
-
-|   |   |       |-- cinemaSelect.png
-
-|   |   |       |-- headBG.png
-
-|   |   |       |-- loading.gif
-
-|   |   |       |-- location.png
-
-|   |   |       |-- logo.png
-
-|   |   |       |-- movie.png
-
-|   |   |       |-- movieSelect.png
-
-|   |   |       |-- nothing.png
-
-|   |   |       |-- order_movie.png
-
-|   |   |       |-- order_store.png
-
-|   |   |       |-- pos.png
-
-|   |   |       |-- qr.png
-
-|   |   |       |-- selected.png
-
-|   |   |       |-- star-empty.png
-
-|   |   |       |-- star-full.png
-
-|   |   |       |-- star-half.png
-
-|   |   |       |-- status.png
-
-|   |   |       |-- unselected.png
-
-|   |   |       |-- user.png
-
-|   |   |       |-- userSelect.png
-
-|   |   |       `-- youcan.jpg
-
-|   |   |-- components
+|   |   |-- components(公用组件)
 
 |   |   |   |-- cinemaMap.vue(头部地图)
 
@@ -189,15 +139,7 @@ Vue-Movie-APP
 
 |   |-- vue.config.js(wabpack配制文件)
 
-|   
-
-|-- package.json
-
-|-- release.sh
-
 |-- server
-
-|   |-- README.md
 
 |   |-- app.js(处理公共逻辑)
 
@@ -205,19 +147,11 @@ Vue-Movie-APP
 
 |   |   `-- movie.json
 
-|   |-- bin
-
-|   |   `-- www
-
 |   |-- controller
 
 |   |   |-- cinemas.js(影院逻辑处理)
 
 |   |   `-- movie.js(电影逻辑处理)
-
-|   |-- package-lock.json
-
-|   |-- package.json
 
 |   |-- routes
 
@@ -225,15 +159,10 @@ Vue-Movie-APP
 
 |   |   `-- movie.js(电影路由)
 
-|   |-- start.js
-
-|   |-- utils
-
 |   |   |-- request.js(请求封装)
 
 |   |   `-- util.js
 
-|   `-- yarn.lock
 ```
 
 ### 技术栈
