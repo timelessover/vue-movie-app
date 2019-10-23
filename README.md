@@ -10,12 +10,10 @@
 
 ### 项目目录
 
+前端
+
 ```
 Vue-Movie-APP
-
-|-- LICENSE
-
-|-- README.md
 
 |-- app
 
@@ -137,6 +135,10 @@ Vue-Movie-APP
 
 |   |-- vue.config.js(wabpack配制文件)
 
+```
+服务端
+
+```
 |-- server
 
 |   |-- app.js(处理公共逻辑)
@@ -160,7 +162,6 @@ Vue-Movie-APP
 |   |   |-- request.js(请求封装)
 
 |   |   `-- util.js
-
 ```
 
 ### 技术栈
@@ -205,7 +206,10 @@ Vue-Movie-APP
 
 
 
-![](https://upload-images.jianshu.io/upload_images/8562733-9a5662dee18ca227.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)![](https://upload-images.jianshu.io/upload_images/8562733-cbb32bea56d24e44.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)![](https://upload-images.jianshu.io/upload_images/8562733-4e0f630d52aa9096.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)![](https://upload-images.jianshu.io/upload_images/8562733-985e813651a8998c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)![](https://upload-images.jianshu.io/upload_images/8562733-6fff1e2d51874c34.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)![](https://upload-images.jianshu.io/upload_images/8562733-46358348b0f81157.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
+![](https://upload-images.jianshu.io/upload_images/8562733-9a5662dee18ca227.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
+![](https://upload-images.jianshu.io/upload_images/8562733-cbb32bea56d24e44.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
+![](https://upload-images.jianshu.io/upload_images/8562733-985e813651a8998c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
+![](https://upload-images.jianshu.io/upload_images/8562733-46358348b0f81157.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
 
 ## 启动
 
@@ -218,3 +222,19 @@ cd app && yarn serve
 
 cd server && yarn dev
 ```
+
+## 后记
+
+本来写了`uni-app` 版本，由于发布总是失败，所以写了移动端的 vue 版本。下面说说踩的几个坑。
++ 封装video
+原来想使用video.js来处理视频页面，但是相关文档和实例太少，所以自己封装了一个兼容微信X5的移动端播放器，后期也准备对组件迭代，已经建仓完成。
++ vant中 `imagePreview`问题 
+需要配合导航的声明周期进行销毁，要不会出现页面倒退bug
++ 登录鉴权
+主要是利用导航钩子，对特权路由进行`meta`声明。但是遇到权限页面会出现后退后，再次出现登录页面的情况，我这边利用路由参数来判断，需要倒退几页解决了这个问题。
++ 后端部署
+第一次在前后端分离项目，并不是很懂部署，自己依靠搜索完成了`nginx`配置，pm2部署，还算小有成就感。
+用 `koa2` 后，又研究了一下 `egg`,自带集成TS，也不用自己建立`controll`,嗯，真香~。
+
+后续准备用 `egg` 和 `React` 搭建一个后台管理平台，总之继续加油学习吧!!!
+
