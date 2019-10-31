@@ -8,8 +8,55 @@
 
 ![](https://upload-images.jianshu.io/upload_images/8562733-f6085d8a4fecd42f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800)
 
-### 项目目录
 
+### 技术栈
+
+#### 前端
+
+ \- vue
+
+ \- vue-router
+
+ \- vuex
+
+ \- axios
+
+ \- vant
+
+ \- vue-cli3
+
+ \- scss
+
+ \- px-to-vw(移动端适配)
+
+ \- fastClick(移动端300ms延迟)
+
+#### 后端
+
+ \- koa
+
+ \- axios
+
+ \- koa-cors(跨域问题)
+
+ \- nginx(反向代理)
+
+ \- pm2(服务器部署)
+
+ \- jwt(逻辑和缓存相似)
+
+
+
+### 项目截图
+
+
+
+![](https://upload-images.jianshu.io/upload_images/8562733-9a5662dee18ca227.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
+![](https://upload-images.jianshu.io/upload_images/8562733-cbb32bea56d24e44.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
+![](https://upload-images.jianshu.io/upload_images/8562733-985e813651a8998c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
+![](https://upload-images.jianshu.io/upload_images/8562733-46358348b0f81157.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
+
+### 项目目录
 前端
 
 ```
@@ -163,53 +210,6 @@ Vue-Movie-APP
 
 |   |   `-- util.js
 ```
-
-### 技术栈
-
-#### 前端
-
- \- vue
-
- \- vue-router
-
- \- vuex
-
- \- axios
-
- \- vant
-
- \- vue-cli3
-
- \- scss
-
- \- px-to-vw(移动端适配)
-
- \- fastClick(移动端300ms延迟)
-
-#### 后端
-
- \- koa
-
- \- axios
-
- \- koa-cors(跨域问题)
-
- \- nginx(反向代理)
-
- \- pm2(服务器部署)
-
- \- jwt(逻辑和缓存相似)
-
-
-
-### 项目截图
-
-
-
-![](https://upload-images.jianshu.io/upload_images/8562733-9a5662dee18ca227.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
-![](https://upload-images.jianshu.io/upload_images/8562733-cbb32bea56d24e44.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
-![](https://upload-images.jianshu.io/upload_images/8562733-985e813651a8998c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
-![](https://upload-images.jianshu.io/upload_images/8562733-46358348b0f81157.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/300)
 
 ## 启动
 
