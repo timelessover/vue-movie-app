@@ -23,7 +23,7 @@
     "babel-plugin-import": "^1.12.2",
     "fastclick": "^1.0.6",
     "jsonp": "^0.2.1",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.1",
     "postcss-px-to-viewport": "^1.1.1",
     "sass-loader": "^7.1.0",
     "video.js": "^7.6.5",
